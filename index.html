@@ -5,16 +5,29 @@ layout: default
 <div class="home">
 
   <div class="posts">
-    {% for post in paginator.posts %}
+    {% for post in site.posts limit: 3 %}
       <div class="post">
         <a href="{{ post.url | prepend: site.baseurl }}" class="post-link">
-          <p class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</p>
+          <p class="post-meta">{{ post.date | date: "%B %-d, %Y" }}</p>
           <h3 class="h2 post-title">{{ post.title }}</h3>
           <p class="post-summary">{{ post.summary }}</p>
         </a>
       </div>
     {% endfor %}
+
+    <div class="rule">
+      <hr>
+      Older Posts:
+      <hr>
+    </div>
+    <ul class="older-posts">
+    {% for post in site.posts offset: 3 %}
+    <li>
+      <span>{{ post.date | date: "%B %-d, %Y" }}</span>
+      <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+    </li>
+    {% endfor %}
+    </ul>
   </div>
 
-  {% include pagination.html %}
 </div>

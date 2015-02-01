@@ -1,18 +1,18 @@
 # Site settings
-title:       Pixyll
-email:       your_email@example.com
-author:      John Otander
-description: "A simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff."
-baseurl:     ""
-url:         "http://pixyll.com"
+title:       blog
+email:       bgschiller@gmail.com
+author:      Brian Schiller
+description: "Writings on Mathematics, Software, and Teaching."
+baseurl:     "/pixyll"
+url:         "http://brianschiller.com"
 
 # Google analytics
 google_analytics: UA-53548208-1
 
 # Optional features
-animated:           false
-show_related_posts: false
-show_post_footers:  false
+animated:           true
+show_related_posts: true
+show_post_footers:  true
 
 # Disqus post comments
 # (leave blank to disable Disqus)
@@ -34,6 +34,5 @@ markdown:     redcarpet
 redcarpet:
   extensions: ['smart', 'tables', 'with_toc_data']
 permalink:    pretty
-paginate:     3
 sass:
   compressed: true
