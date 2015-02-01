@@ -7,12 +7,12 @@ baseurl:     "/pixyll"
 url:         "http://brianschiller.com"
 
 # Google analytics
-google_analytics: UA-53548208-1
+google_analytics:
 
 # Optional features
 animated:           true
-show_related_posts: true
-show_post_footers:  true
+show_related_posts: false
+show_post_footers:  false
 
 # Disqus post comments
 # (leave blank to disable Disqus)
@@ -33,6 +33,6 @@ flattr_button:
 markdown:     redcarpet
 redcarpet:
   extensions: ['smart', 'tables', 'with_toc_data']
-permalink:    pretty
+permalink:    /:year/:month/:day/:title
 sass:
   compressed: true

@@ -1,0 +1,198 @@
+<html lang="en">
+<head>
+  <!-- My css and javascript skills are still fledgling. Beware reading this source, as it may hurt your eyes.-->
+  <meta charset="utf-8" />
+  <title>jQuery UI Draggable - Events</title>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
+  <style>
+  .wrapper{
+    overflow:hidden; /*make sure the wrapper has no dimension*/
+    text-align: center;
+    margin-bottom:10px;
+  }
+
+  .cardboard {
+    background: #ef8d69; /* Old browsers */
+    background: -moz-linear-gradient(top,  #ef8d69 0%, #8c3310 82%, #752201 100%, #bf6e4e 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ef8d69), color-stop(82%,#8c3310), color-stop(100%,#752201), color-stop(100%,#bf6e4e)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ef8d69 0%,#8c3310 82%,#752201 100%,#bf6e4e 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ef8d69 0%,#8c3310 82%,#752201 100%,#bf6e4e 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ef8d69 0%,#8c3310 82%,#752201 100%,#bf6e4e 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ef8d69 0%,#8c3310 82%,#752201 100%,#bf6e4e 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ef8d69', endColorstr='#bf6e4e',GradientType=0 ); /* IE6-9 */
+
+  }
+
+  .green-ball {
+background: #299a0b; /* Old browsers */
+background: -moz-linear-gradient(top, #299a0b 0%, #10ce1a 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#299a0b), color-stop(100%,#10ce1a)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #299a0b 0%,#10ce1a 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #299a0b 0%,#10ce1a 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #299a0b 0%,#10ce1a 100%); /* IE10+ */
+background: linear-gradient(to bottom, #299a0b 0%,#10ce1a 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#299a0b', endColorstr='#10ce1a',GradientType=0 ); /* IE6-9 */
+}
+
+
+  .box{
+    float:left; 
+    width:80px;
+    height:80px;
+    margin:8px;
+    position:relative;
+  }
+
+.circle
+    {
+    width:50%;
+    height:50%;
+    border-radius:50%;
+    font-size:20px;
+    line-height:50px;
+    text-align:center;
+    background:#000
+    display:inline-block;
+    margin: 25%;
+    }
+
+  .circle-red {
+      background: red;
+      border: 3px solid yellow
+  }
+
+  .box-label {
+    position: absolute;
+    left: 2;
+    top: 0;
+    color: white;
+  }
+
+</style>
+
+<!-- With much help from http://www.elated.com/articles/drag-and-drop-with-jquery-your-essential-guide/ -->
+  <script>
+    var numBoxes = 5;
+    var n_ball_multiplier = 3;
+
+    $(init);
+
+    function init(){
+        $('#successMessage').hide()
+        $('#successMessage').css( {
+            left: '580px',
+            top: '250px',
+            /*width: 0,
+            height: 0*/
+        } );
+
+        //reset the game
+        $('#boxes-container').html('');
+        console.log(numBoxes);
+        numBoxes = $('#num_boxes').val();
+        if (numBoxes > 8){
+          numBoxes = 8;
+          $('#num_boxes').val(numBoxes);
+        }
+
+        n_ball_multiplier = $('#ball_multiplier').val();
+        if (n_ball_multiplier > 9){
+          n_ball_multiplier = 9;
+          $('#ball_multiplier').val(n_ball_multiplier);
+        }
+
+        for(var ix=1; ix<=numBoxes; ix++){
+            $('<div class="box cardboard"></div>').data( 'box_id', ix ).attr( 'id', 'box'+ix ).appendTo( '#boxes-container' ).droppable({
+              //accept: 'div.ballGroup',
+              hoverClass: 'hovered',
+              drop: handleBallDrop
+            } );
+            $('<div>0</div>').data('nBalls', 0).attr('id', 'ball'+ix).appendTo( '#box' +ix ).draggable({
+              containment: '#boxes-container',
+              stack: '.box div', //not really sure what this one does...
+              cursor: 'pointer',
+              revert: true
+            }).attr('class', 'ball circle green-ball');
+            $('<span class="box-label">B'+ ix + '</span>').appendTo('#box'+ix);
+        }
+        //$('.box').attr('align','center').attr('class', 'float-left');
+        randomlyDistributeBalls();
+        checkSuccess();
+    }
+
+    function randomlyDistributeBalls(){
+      for(var ix=0; ix<numBoxes*n_ball_multiplier; ix++){
+            var destBox = randomChoice(numBoxes);
+            console.log('adding ball to box ' + destBox);
+            var destBall = $('#ball' + destBox);
+            console.log(destBall);
+            console.log(destBall.html());
+            destBall.data('nBalls', destBall.data('nBalls') + 1); //increase number in that ball
+            destBall.html( destBall.data('nBalls'));
+        }
+    }
+
+    function randomChoice(x){
+        return Math.floor(Math.random()*x + 1);
+    }
+
+    function checkSuccess(){
+      var allBalls = $('.ball');
+        var uneven_split = false;
+        for(var ix=0; ix < allBalls.length; ix++){
+          if ($(allBalls[ix]).data('nBalls') != n_ball_multiplier){
+            uneven_split = true;
+          }
+        }
+        if (! uneven_split){
+          $('#successMessage').show();
+        }
+    }
+
+    function handleBallDrop( event, ui ){
+        var source_box = ui.draggable.closest(".box");
+        var source_num_balls = ui.draggable.data('nBalls');
+        if (source_box.data('box_id') > source_num_balls){
+          console.log('can\'t move only ' + source_num_balls + 
+                      ' from box number ' + source_box.data('box_id')+ '!');
+          return;
+        }
+        //else move the balls
+        var source_ball = source_box.find('.ball');
+        source_ball.data('nBalls', source_num_balls - source_box.data('box_id'));
+        source_ball.html(source_ball.data('nBalls') );
+
+        var dest_ball = $(this).find('.ball');
+        dest_ball.data('nBalls', dest_ball.data('nBalls') + source_box.data('box_id'));
+        dest_ball.html(dest_ball.data('nBalls'));
+
+        checkSuccess();
+    }
+  </script>
+</head>
+<body>
+<div id="four-boxes-game">
+      <div id="successMessage">
+        You did it!
+        <button onclick="init()">Play Again</button>
+    </div>
+    <label for="ball_multiplier">
+      Ball Multiplier:
+      <input type="text" id="ball_multiplier" size="2" value="3"/>
+    </label>
+    &nbsp;
+    &nbsp;
+    <label for="num_boxes">
+      Number of boxes:
+      <input type="text" id="num_boxes" size="2" value="5"/>
+    </label>
+    &nbsp;
+    &nbsp;
+    <button onclick="init();">New Game</button>
+    <div class="wrapper" id="boxes-container"></div>
+</div>
+ 
+ 
+</body>
+</html>

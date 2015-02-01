@@ -1,0 +1,301 @@
+---
+layout: none
+---
+
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<script src="{{ site.url }}/assets/js/vendor/jquery-1.9.1.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+
+<!-- Optional theme 
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-theme.min.css">
+-->
+<!-- Latest compiled and minified JavaScript -->
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+<title>Curved Grade Distributions</title>
+
+</head>
+<body>
+<div class="container">
+<div class="page-header">
+<h1>Grading on a Curve</h1>
+<div class="row">
+<div id = "alert_placeholder"></div>
+<p>
+<strong>Linear Scales</strong>
+<button id="high_grade_add">High Grade to 100 (add)</button>
+<button id="high_grade_mult">High Grade to 100 (scale)</button>
+y = <input type="text" size="3" id="linear_m" value="1"> * x + <input type="text" size="3" id="linear_b" value="0">
+<button id="linear_go">Go</button>
+</p>
+
+<p>
+<strong>Root Scales</strong>
+y = 100^(1-a) * x^a, where a = <input type="text" size="3" id="root_a" value="1">
+<button id="root_go">Go</button>
+<em>(good values are 0 &le; a &le; 1)</em>
+</p>
+
+<p>
+<strong>Just for Fun</strong>
+<button id="gravity_grade">Gravity Grade</button>
+<button id="students_choice">Students' Choice</button>
+<button id="grouchy_grade">Grouchy Grade</button>
+</p>
+
+
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+</div>
+
+<script>
+function maxScore(arr){
+    var max= -Infinity;
+    for (var ix=0; ix < arr.length; ix++){
+        if (arr[ix] > max){
+            max = arr[ix];
+        }
+    }
+    return max;
+}
+
+$('#high_grade_add').click(function(){
+    $('#linear_b').val(100 - maxScore(original_scores));
+    $('#linear_m').val(1);
+    LinearGo();
+});
+
+$('#high_grade_mult').click(function(){
+    $('#linear_b').val(0);
+    $('#linear_m').val(100/maxScore(original_scores));
+    LinearGo();
+});
+function LinearGo(label){
+    var lb = parseFloat($('#linear_b').val());
+    if (isNaN(lb)){
+        showAlert($('#linear_b').val() + ' is not a number', 'warning');
+        return;
+    }
+    var lm = parseFloat($('#linear_m').val());
+    if (isNaN(lm)){
+        showAlert($('#linear_m').val() + ' is not a number', 'warning');
+        return;
+    }
+    changeChart(function(x){
+        return lm*x + lb;
+    }, (label ? label :'y = ' + approx(lm) + ' * x + ' + approx(lb) ));
+}
+
+$('#linear_go').click(function(){
+    LinearGo();
+});
+
+$('#root_go').click(function(){
+    var ra = parseFloat($('#root_a').val());
+    if (isNaN(ra)){
+        showAlert($('#root_a').val() + ' is not a number', 'warning');
+        return;
+    }
+    changeChart(function(x){
+        return Math.pow(100,1-ra) * Math.pow(x,ra);
+    }, ('y = 100^(1 - ' + approx(ra) + ') * x ^' + approx(ra)));
+});
+
+$('#gravity_grade').click(function(){
+    changeChart(function(x){
+        return Math.random()*100;
+    },('y = rand(0,100)'));
+});
+
+$('#students_choice').click(function(){
+    $('#linear_b').val(100);
+    $('#linear_m').val(0);
+    LinearGo('y = 100');
+})
+
+$('#grouchy_grade').click(function(){
+    $('#linear_b').val(0);
+    $('#linear_m').val(0);
+    LinearGo('y = 0');
+})
+
+function approx(num){
+    return Math.floor(num * 1000) / 1000;
+}
+
+function saturatingFloor(num){
+    inum = Math.floor(num / 10) * 10;
+
+    return inum > 90 ? 90 :
+            inum < 0 ? 0 : inum;
+}
+
+function toBuckets(data){
+    var buckets = [];
+    for (var bucket=0; bucket < 10; bucket++){
+        buckets.push(0);
+    }
+    for (var ix=0; ix < data.length; ix++){
+        var bucket = saturatingFloor(data[ix])/10;
+        //console.log('score of ' + data[ix]+', adding to bucket' + bucket);
+        buckets[bucket] += 1;
+    }
+    //console.log('buckets:');
+    //console.log(buckets);
+    return buckets;
+}
+
+function changeChart(curve, name){
+    var chart = $('#container').highcharts();
+    chart.series[0].update({ name: name });
+    chart.series[0].setData(
+        toBuckets($.map(original_scores,
+            curve)));
+}
+
+function showAlert(message,alert_class){
+    $('#alert_placeholder').html('<div id="alertdiv" class="alert alert-' + alert_class + ' alert-dismissable"><button class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'
+        + message + '</div>');
+}
+
+$(function () {
+        $('#container').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Curved Grade Distributions'
+            },
+            xAxis: {
+                categories: [
+                    '(-\u221E,10)',
+                    '[10,20)',
+                    '[20,30)',
+                    '[30,40)',
+                    '[40,50)',
+                    '[50,60)',
+                    '[60,70)',
+                    '[70,80)',
+                    '[80,90)',
+                    '[90,\u221E)'
+                ]
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Number of students'
+                }
+            },
+            tooltip: {
+                pointFormat:'<strong>{point.y} students</strong>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0,
+                    borderWidth: 0,
+                    groupPadding: 0,
+                    shadow: false
+                }
+            },
+            series: [{
+                name: 'y = x',
+                data: toBuckets(original_scores)
+            }]
+        });
+    });
+    
+
+
+var original_scores = [
+  11.91016708231156,
+  18.6351574485437,
+  19.82181869172409,
+  21.4323930621364,
+  22.97143607702743,
+  23.443839871107166,
+  25.984069071721386,
+  26.643205278242714,
+  29.35979248562027,
+  31.709731565483505,
+  32.26575185039307,
+  33.36538201905724,
+  33.40619648984549,
+  35.58092475897629,
+  36.50523974303057,
+  37.44297207326471,
+  37.55961064881216,
+  39.42612116435767,
+  40.768900383683764,
+  40.878454198305064,
+  40.9273245827082,
+  42.758119137569985,
+  43.49862015176569,
+  44.24284825781356,
+  44.40759363474089,
+  45.13134136587826,
+  46.004953185449374,
+  46.494311530991304,
+  46.795236111775466,
+  46.92454903065947,
+  48.72967166930388,
+  50.495347573088466,
+  50.651212994218,
+  52.53024839368656,
+  52.74047875657665,
+  53.581677363731686,
+  54.20092154140868,
+  54.40906924571949,
+  56.47409213941837,
+  56.87843674663385,
+  56.95432690615711,
+  56.97532544462788,
+  57.001301002179865,
+  57.0275951375817,
+  57.78534884862614,
+  58.65544422236805,
+  59.512153580180915,
+  59.95922543302143,
+  60.09950205450362,
+  60.56506950978711,
+  61.71791258638226,
+  62.2697262433332,
+  63.57972153130148,
+  64.24430775161888,
+  64.74556808501988,
+  65.03880080438786,
+  66.52371468730601,
+  67.3739987854934,
+  67.60966341903105,
+  68.81866084012287,
+  68.92074298083655,
+  70.78219313953954,
+  70.96328326547803,
+  71.67602161918921,
+  71.72277533780827,
+  72.82505856439994,
+  73.99315205885287,
+  74.6674983099709,
+  75.67030376096362,
+  75.88723257900166,
+  75.9332198908924,
+  76.87167754237946,
+  78.28890846954049,
+  78.66311705755275,
+  79.42745217881401,
+  79.75613531038078,
+  82.73753891885785,
+  84.55255762034226,
+  86.15980370941934,
+  86.60850662625698,
+  86.62887778881844,
+  92.96014460301608,
+  95.62180871996185
+];
+
+</script>
+</div>
+</body>
