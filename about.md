@@ -1,19 +1,9 @@
 ---
 layout: page
-title: About Pixyll
+title: About Me
 permalink: /about/
 ---
 
-This Jekyll theme was crafted with <3 by [John Otander](http://johnotander.com)
-([@4lpine](https://twitter.com/4lpine)).
+<img src="http://brianschiller.com/images/bio-photo.jpg">
 
-Checkout the [Github repository](https://github.com/johnotander/pixyll) to download it,
-request a feature, report a bug, or contribute. It's free, and open source
-([MIT](http://opensource.org/licenses/MIT)).
-
-Thanks to the following:
-
-* [BASSCSS](http://basscss.com)
-* [Jekyll](http://jekyllrb.com)
-* [Refills](http://refills.bourbon.io/)
-* [Solarized](http://ethanschoonover.com/solarized)
+I am a recent graduate of Western Washington University, where I studied Math and Computer Science. I currently work at [TopOpps](http://topopps.com/) in St. Louis, MO. If you would like to get in touch, please email me at <a href="mailto:{{ site.email }}">{{ site.email }}</a>.
