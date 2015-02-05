@@ -2,7 +2,12 @@
 
 $break-small: 480px;
 
-div
+.pt2 {
+  padding-top: 2rem;
+}
+.pb2 {
+  padding-bottom: 2rem;
+}
 
 div.title-block .p-responsive {
   padding-bottom: 0;
@@ -10,14 +15,14 @@ div.title-block .p-responsive {
 
 div.title-block.light-text {
   header a {
-    color: #ddd;
+    color: #eee;
   }
   h1 {
-    color: #d8d8d8;
+    color: #fff;
     //-webkit-text-stroke: 1px black;
   }
   span.post-meta {
-    color: #ddd;
+    color: #eee;
   }
 }
 
