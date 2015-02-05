@@ -4,8 +4,9 @@ title: Wolfram Presentation at Strange Loop
 description: "Wolfram Language has so much baked-in -- what's left to do?"
 category: blog
 tags: [programming, future, wolfram]
-image:
-  feature: Textile_cone.jpg
+feature_image: textile_cone.jpg
+darken_image: 0.4
+lighten_text: true
 ---
 
 At Strange Loop today, Stephen Wolfram presented on his Wolfram Language. With its "over 5000 functions", the philosophy is to have as much as possible baked-in. This certainly makes for a good demo. Applause broke out at a number of points in his presentation, such as when he projected an edge-detected video of himself taken from his laptop's webcam.

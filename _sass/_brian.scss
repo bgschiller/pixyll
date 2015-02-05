@@ -2,6 +2,25 @@
 
 $break-small: 480px;
 
+div
+
+div.title-block .p-responsive {
+  padding-bottom: 0;
+}
+
+div.title-block.light-text {
+  header a {
+    color: #ddd;
+  }
+  h1 {
+    color: #d8d8d8;
+    //-webkit-text-stroke: 1px black;
+  }
+  span.post-meta {
+    color: #ddd;
+  }
+}
+
 .rule {
   margin: 75px 0 25px 0;
   text-align: center;
