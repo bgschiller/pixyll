@@ -3,9 +3,9 @@
 {% include head.html %}
 <body class="{% if site.animated %}animated fade-in-down{% endif %}">
   <div class="site-wrap">
-    <div class="title-block{% if page.lighten_text %} light-text{% endif%}"
+    <div class="title-block{%if page.feature_image %} with-image{% endif %}{% if page.lighten_text %} light-text{% endif%}"
        {% if page.feature_image %}
-       style="background: {% if page.darken_image %}linear-gradient(rgba(0, 0, 0, {{page.darken_image}}), rgba(0, 0, 0, {{page.darken_image}})), {% endif %}url({{ site.url }}{{ site.baseurl }}/images/features/{{ page.feature_image }}) center center fixed no-repeat;"
+       style="background-image: {% if page.darken_image %}linear-gradient(rgba(0, 0, 0, {{page.darken_image}}), rgba(0, 0, 0, {{page.darken_image}})), {% endif %}url({{ site.url }}{{ site.baseurl }}/images/features/{{ page.feature_image }});"
        {% endif %}>
       {% include header.html %}
 

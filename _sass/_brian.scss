@@ -26,6 +26,15 @@ div.title-block.light-text {
   }
 }
 
+div.title-block.with-image {
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  @media screen and (min-device-width: $break-small){
+    background-attachment: fixed;
+  }
+}
+
 .rule {
   margin: 75px 0 25px 0;
   text-align: center;
