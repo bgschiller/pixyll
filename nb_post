@@ -1,0 +1,49 @@
+#!/usr/bin/env python
+
+from bs4 import BeautifulSoup
+import click
+
+from dateutil.parser import parse
+from IPython.config import Config
+from IPython.nbconvert import HTMLExporter
+
+templ = '''\
+---
+layout: post
+title: {title}
+mathjax: true
+---
+
+{body}
+'''
+
+
+@click.command()
+@click.argument('notebook', type=click.Path(exists=True))
+def nb_post(notebook):
+	exportHtml = HTMLExporter(config=Config({'HTMLExporter':{'default_template':'basic'}}))
+	body, resources = exportHtml.from_filename(notebook)
+	# Select out only the notebook we care about
+	soup = BeautifulSoup(body).find(id='notebook-container')
+	
+	soup.attrs['class'] = 'ipynb'
+	del soup.attrs['id']
+
+	title_tag = soup.find('h1')
+	title = title_tag.contents[0]
+	title_tag.decompose()
+
+
+	# Replace the .input with .ipynb-input, because of a conflict with basscss
+	for div in soup.find_all('div', class_='input'):
+		pos = div.attrs['class'].index('input')
+		div.attrs['class'][pos] = 'ipynb-input'
+
+	base, ext = notebook.rsplit('.')
+	date = parse(resources['modified_date'])
+	fname = date.strftime('%Y-%m-%d-' + base + '.md')
+	with open(fname, 'w') as f:
+		f.write(templ.format(title=title, body=str(soup)))
+	print 'wrote', fname
+if __name__ == '__main__':
+	nb_post()
