@@ -6,9 +6,9 @@ modified: 2013-07-24
 category: work
 tags: [unix, minishell, c, shell, wwu]
 comments: true
-image:
-  feature: texture-feature-05.jpg
-  thumb: latex-presentation-wf.jpg
+feature_image: textile_cone.jpg
+darken_image: 0.4
+lighten_text: true
 ---
 
 Phil Nelson's UNIX Systems class at WWU guides each student through a series of six assignments, each adding more functionality to a basic shell program. At it's start, <code>msh</code> can <code>fork</code> and <code>eval</code>, but not much else. By the end of the 10 week class, both the minishell and the students are much more capable. 

@@ -29,12 +29,6 @@ div.title-block.light-text {
 div.title-block.with-image {
   background-repeat: no-repeat;
   background-position: center center;
-
-  //This media query exists because iOS doesn't allow fixed
-  //background (too expensive appently) and doesn't even show the image
-  @media screen and (min-device-width: $break-small){
-    background-attachment: fixed;
-  }
 }
 
 .rule {

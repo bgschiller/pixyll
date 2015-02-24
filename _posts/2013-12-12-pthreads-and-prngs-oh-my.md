@@ -5,8 +5,9 @@ description: "Professors teaching Concurrency classes are fond of saying that wh
 category: blog
 tags: [programming, concurrency, prng]
 mathjax: true
-image:
-  feature: chinatown_thread.jpg
+feature_image: chinatown-threads.jpg
+lighten_text: true
+darken_image: 0.2
 ---
 
 We learn in concurrency class that if you have a race condition in your code, the results are unpredictable. Certainly, the results are not usually what you wanted, but does that make them unpredictable?

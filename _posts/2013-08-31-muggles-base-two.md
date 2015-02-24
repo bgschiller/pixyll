@@ -5,8 +5,8 @@ description: "You can be half muggle, quarter muggle, or even 13/16 muggle. But 
 category: blog
 tags: [math, wizards, fun, muggles, teaching]
 mathjax: true
-image:
-  feature: hogwarts-express.jpeg
+feature_image: hogwarts-express.jpg
+lighten_text: true
 ---
 
 One day, my friend Matt Eschbach asked me, "So you can be 1/2 muggle-born, or 1/4 muggle-born. But can you be any proportion? What about 1/3?" The question turns out to have a really elegant answer, but let's work our way up to it. (Note: In order to simplify the math, we will not consider squibs as part of the analysis. I hope those readers will not feel too marginalized by this decision.)
