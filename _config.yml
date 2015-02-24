@@ -3,7 +3,7 @@ title:       blog
 email:       bgschiller@gmail.com
 author:      Brian Schiller
 description: "Writings on Mathematics, Software, and Teaching."
-baseurl:     "/pixyll"
+baseurl:     "/blog"
 url:         "http://brianschiller.com"
 
 # Google analytics
