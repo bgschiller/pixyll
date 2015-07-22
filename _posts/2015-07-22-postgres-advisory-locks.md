@@ -8,7 +8,7 @@ lighten_text: true
 darken_image: 0.2
 ---
 
-I've become a big fan of PostgreSQL in the last year. Window functions, indexed JSON data types, and full text search are all awesome, but lately I was really happy to find a less very simple feature that did exactly what I needed: `pg_advisory_lock`. Postgres advisory locks are stored along with Postgres' own internal locks ( you can even see them in the `pg_locks` table), but their meaning is entirely application-dependent.
+I've become a big fan of PostgreSQL in the last year. Window functions, indexed JSON data types, and full text search are all awesome, but lately I was really happy to find a simple feature that did exactly what I needed: `pg_advisory_lock`. Postgres advisory locks are stored along with Postgres' own internal locks ( you can even see them in the `pg_locks` table), but their meaning is entirely application-dependent.
 
 In my case, we have a per-client sync process that occurs in a background task. We don't want
 two of these stepping on one another's toes, so we can make an advisory lock. Suppose we are doing the sync for a client with an id of 4. We can run
@@ -23,7 +23,7 @@ That query will return True/False depending on whether or not we were granted th
 SELECT pg_advisory_unlock(4);
 ```
 
-So this is pretty neat, but the locks are using a global namespace. What if we need to lock for a sync and also for some other background task? One trick you can use I like is to scope the locks using a hash.
+So this is pretty neat, but the locks are using a global namespace. What if we need to lock for a sync and also for some other background task? One trick you can use is to scope the locks using a hash.
 
 ```python
 hasher = hashlib.sha1()
