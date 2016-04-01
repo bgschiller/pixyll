@@ -80,10 +80,10 @@ def find_org_id(func, args, kwargs):
       return callargs['org_id']
   elif 'session' in callargs:
       return callargs['session']['org_id']
-  raise ValueError('{} not called with org_id or session'.format(func.__name__))
+  raise RuntimeError('{} not called with org_id or session'.format(func.__name__))
 ```
 
-What's more, we can use another function in the `inspect` module to statically ensure that this function expects either `session` or `org_id`:
+What's more, we can use another function in the `inspect` module to statically ensure that this function expects either `session` or `org_id`. By statically, I mean that we can check when the function being decorated is defined, at import-time, rather than when it's called:
 
 ```python
 def the_decorator(func):
