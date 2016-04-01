@@ -42,9 +42,36 @@ def requires_POST(*param_names):
 
 This works okay, but we are depending on the fact that Django sends the `request` parameter as a keyword argument. We could make this more robust by doing something like `kwargs.get('request', args[0])`, but that has it's own problem. Specifically, we're assuming that `request` is the *first* parameter. (That assumption wouldn't be true for a class-based-view, because the first parameter would be `self`.)
 
-Also, we don't just write decorators for views. I recently wrote a decorator that needs access to an `org_id` variable passed to the decorated function. Sometimes it's passed directly, but sometimes it's wrapped inside the `session` dictionary and the session is what's passed. This sounds like a headache of searching `kwargs` or trying to assume the order parameters are passed in order to get our hands on the `org_id`. Luckily, there's a better way.
+Also, we don't just write decorators for views. I recently wrote a decorator that needs access to an `org_id` variable passed to the decorated function. Sometimes it's passed directly, but sometimes it's wrapped inside the `session` dictionary and the session is what's passed. This sounds like a headache of searching `kwargs` or trying to assume the order parameters are passed in order to get our hands on the `org_id`. Just for the sake of completeness, here's what that might look like:
 
-`inspect.getcallargs(func, *args, **kwargs)` returns a dictionary giving telling you what variables would be bound if you called `func` with `*args, **kwargs`. This is *so much better* than trying to guess or assume the order of parameters, or forcing the callers to use always use keyword arguments. We can say:
+```python
+def find_org_id(args, kwargs):
+    if 'org_id' in kwargs:
+        org_id = kwargs['org_id']
+    elif 'session' in kwargs:
+        org_id = kwargs['session']['org_id']
+    else:
+      # uhh, I dunno, I guess we start looking through
+      # args, trying to find one that looks like a session?
+      for arg in args:
+        if isinstance(arg, django.contrib.sessions.backends.db.SessionStore):
+            org_id = arg['org_id']
+            break
+      else:
+          # welll, dang. Let's just assume the first that's a string is
+          # the org_id I guess?
+          for arg in args:
+              if isinstance(arg, basestring):
+                  org_id = args['org_id']
+                  break
+          else:
+              # Crap. I don't even know.
+              raise RuntimeError("It doesn't look like this function take an org_id or a session.")
+```
+
+Ugh. That's just terrible. I did warn you. Luckily, there's a better way.
+
+`inspect.getcallargs(func, *args, **kwargs)` returns a dictionary telling you what variables would be bound if you called `func` with `*args, **kwargs`. This is *so much better* than trying to guess or assume the order of parameters, or forcing the callers to use always use keyword arguments. We can say:
 
 ```python
 def find_org_id(func, args, kwargs):
