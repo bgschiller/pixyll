@@ -3,6 +3,7 @@ layout: post
 title: Django Migrations Tribulations
 category: blog
 tags: [programming, python, django]
+feature_image: migratory-birds.jpg
 ---
 
 ## aka, How we use Django Migrations at TopOPPS
