@@ -193,7 +193,7 @@ Wall time: 5.1 s
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Five seconds and we're only at <code>n=1</code>! This is not going to cut it. The reason (as you may already know), is that we're repeating a lot of work. For example, <code>fib(5)</code> calls <code>fib(4)</code> and <code>fib(3)</code>, but because we don't save <code>fib(3)</code>, we have to compute it again when <code>fib(4)</code> needs it. This gives us a runtime of $O(2^n)$, very slow.</p>
+<p>Five seconds and we're only at <code>n=1</code>! This is not going to cut it. The reason (as you may already know), is that we're repeating a lot of work. For example, <code>fib(5)</code> calls <code>fib(4)</code> and <code>fib(3)</code>, but because we don't save <code>fib(3)</code>, we have to compute it again when <code>fib(4)</code> needs it. This gives us a runtime of <code>O(2^n)</code>, very slow.</p>
 <p>Rather than re-compute all that work, let's save the results. <code>fib(3)</code> is going to be <code>2</code> no matter who asks, so we can save the number each time. This is called 'memoization'.</p>
 </div>
 </div>
@@ -407,7 +407,7 @@ Wall time: 1.36 ms
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Whoa, what a change! In fact, memoization brings the runtime down to $O(n)$, much better than $O(2^n)$.</p>
+<p>Whoa, what a change! In fact, memoization brings the runtime down to <code>O(n)</code>, much better than <code>O(2^n)</code>.</p>
 <p>We might want to use memoization on other occasions. Decorators can help us with this.</p>
 <p>What is the memoization pattern? Basically you keep a dictionary of the results of each call. When we make a new call to the function, first check if it's in our table of saved results. If we <em>do</em> have to do work, save the answer for next time.</p>
 <p>Here's the punchline: we can factor out this idea, and make a <code>memoized</code> higher-order function.</p>
@@ -429,10 +429,10 @@ In [12]:
     <span class="k">def</span> <span class="nf">memoized_version</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">lookup_table</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">lookup_table</span><span class="p">[</span><span class="n">arg</span><span class="p">]</span>
-        
+
         <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
         <span class="n">lookup_table</span><span class="p">[</span><span class="n">arg</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
-        
+
         <span class="k">return</span> <span class="n">result</span>
     <span class="k">return</span> <span class="n">memoized_version</span>
 </pre></div>
@@ -498,7 +498,7 @@ Wall time: 2.01 s
     Out[14]:</div>
 <div class="output_text output_subarea output_pyout">
 <pre>
-&amp;apos;Hi there, Brian&amp;apos;
+&apos;Hi there, Brian&apos;
 </pre>
 </div>
 </div>
@@ -533,7 +533,7 @@ Wall time: 2.01 s
     Out[15]:</div>
 <div class="output_text output_subarea output_pyout">
 <pre>
-&amp;apos;Hi there, Dan&amp;apos;
+&apos;Hi there, Dan&apos;
 </pre>
 </div>
 </div>
@@ -581,7 +581,7 @@ Wall time: 2 s
     Out[17]:</div>
 <div class="output_text output_subarea output_pyout">
 <pre>
-&amp;apos;Hi there, Dan&amp;apos;
+&apos;Hi there, Dan&apos;
 </pre>
 </div>
 </div>
@@ -615,7 +615,7 @@ Wall time: 7.15 µs
     Out[18]:</div>
 <div class="output_text output_subarea output_pyout">
 <pre>
-&amp;apos;Hi there, Dan&amp;apos;
+&apos;Hi there, Dan&apos;
 </pre>
 </div>
 </div>
@@ -672,7 +672,7 @@ Wall time: 2.01 s
     Out[20]:</div>
 <div class="output_text output_subarea output_pyout">
 <pre>
-&amp;apos;Hi there, Dan&amp;apos;
+&apos;Hi there, Dan&apos;
 </pre>
 </div>
 </div>
@@ -706,7 +706,7 @@ Wall time: 7.87 µs
     Out[21]:</div>
 <div class="output_text output_subarea output_pyout">
 <pre>
-&amp;apos;Hi there, Dan&amp;apos;
+&apos;Hi there, Dan&apos;
 </pre>
 </div>
 </div>
@@ -718,7 +718,7 @@ Wall time: 7.87 µs
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Remember our slow $O(2^n)$ implementation of fibonacci from above? We can memoize it <em>with no code changes</em>.</p>
+<p>Remember our slow <code>O(2^n)</code> implementation of fibonacci from above? We can memoize it <em>with no code changes</em>.</p>
 </div>
 </div>
 </div>
@@ -1066,14 +1066,14 @@ In [34]:
 <span class="sd">      num - the possibly prime number</span>
 <span class="sd">      give_factors - True/False, whether to include the factors</span>
 <span class="sd">    """</span>
-      
+
     <span class="n">potential_divisor</span> <span class="o">=</span> <span class="mi">2</span>
     <span class="n">factors</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">while</span> <span class="n">potential_divisor</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="n">num</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">num</span> <span class="o">%</span> <span class="n">potential_divisor</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">factors</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">potential_divisor</span><span class="p">,</span> <span class="n">num</span> <span class="o">/</span> <span class="n">potential_divisor</span><span class="p">))</span>
         <span class="n">potential_divisor</span> <span class="o">+=</span> <span class="mi">1</span>
-    
+
     <span class="n">num_is_prime</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">factors</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
     <span class="k">if</span> <span class="n">give_factors</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">num_is_prime</span><span class="p">,</span> <span class="n">factors</span>
@@ -1409,7 +1409,7 @@ In [46]:
     Out[46]:</div>
 <div class="output_text output_subarea output_pyout">
 <pre>
-&amp;apos;Happy Thanksgiving, Diane&amp;apos;
+'Happy Thanksgiving, Diane'
 </pre>
 </div>
 </div>
@@ -1467,14 +1467,14 @@ In [48]:
 <span class="sd">      num - the possibly prime number</span>
 <span class="sd">      give_factors - True/False, whether to include the factors</span>
 <span class="sd">    """</span>
-      
+
     <span class="n">potential_divisor</span> <span class="o">=</span> <span class="mi">2</span>
     <span class="n">factors</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">while</span> <span class="n">potential_divisor</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="n">num</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">num</span> <span class="o">%</span> <span class="n">potential_divisor</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">factors</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">potential_divisor</span><span class="p">,</span> <span class="n">num</span> <span class="o">/</span> <span class="n">potential_divisor</span><span class="p">))</span>
         <span class="n">potential_divisor</span> <span class="o">+=</span> <span class="mi">1</span>
-    
+
     <span class="n">num_is_prime</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">factors</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
     <span class="k">if</span> <span class="n">give_factors</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">num_is_prime</span><span class="p">,</span> <span class="n">factors</span>
@@ -1941,8 +1941,8 @@ In [63]:
     Out[63]:</div>
 <div class="output_text output_subarea output_pyout">
 <pre>
-{&amp;apos;/api/cat_picture&amp;apos;: &lt;function __main__.get_cat_pic&gt;,
- &amp;apos;/api/doc_picture&amp;apos;: &lt;function __main__.get_dog_pic&gt;}
+{&apos;/api/cat_picture&apos;: &lt;function __main__.get_cat_pic&gt;,
+ &apos;/api/doc_picture&apos;: &lt;function __main__.get_dog_pic&gt;}
 </pre>
 </div>
 </div>
@@ -2029,10 +2029,10 @@ In [66]:
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-Ralph: I&amp;apos;ve got the conch!
-Piggy: I&amp;apos;ve got the conch!
-Jack: I&amp;apos;ve got the conch!
-Roger: I&amp;apos;ve got the conch!
+Ralph: I&apos;ve got the conch!
+Piggy: I&apos;ve got the conch!
+Jack: I&apos;ve got the conch!
+Roger: I&apos;ve got the conch!
 Piggy: Okay, you can talk now.Roger: Okay, you can talk now.
  Jack: Okay, you can talk now.
 Ralph: Okay, you can talk now.
@@ -2085,13 +2085,13 @@ In [68]:
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-Ralph: I&amp;apos;ve got the conch!
+Ralph: I&apos;ve got the conch!
 Ralph: Okay, you can talk now.
-Piggy: I&amp;apos;ve got the conch!
+Piggy: I&apos;ve got the conch!
 Piggy: Okay, you can talk now.
-Jack: I&amp;apos;ve got the conch!
+Jack: I&apos;ve got the conch!
 Jack: Okay, you can talk now.
-Roger: I&amp;apos;ve got the conch!
+Roger: I&apos;ve got the conch!
 Roger: Okay, you can talk now.
 
 </pre>
@@ -2123,11 +2123,10 @@ In []:
 </div>
 <div class="inner_cell">
 <div class="input_area">
-<div class="highlight"><pre> 
+<div class="highlight"><pre>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 </div>
-
