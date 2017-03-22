@@ -13,7 +13,7 @@ Please do not read this as advice. Although we've spent a while thinking about i
 
 Let's say the latest migration in the production branch is `0014_user_phone_num.py`. Sometimes, two different feature branches will add migrations numbered 15: `0015_create_taskcustom.py` and `0015_opp_splits.py`. First, the branch with `0015_create_taskcustom` is merged to the `dev` server. The migration is run, and it all goes swimmingly. But what happens when `0015_opp_splits` is merged?
 
-Django expects a single migration to be the 'lastest' migration. When there are two 'latest' migrations, it will refuse to run until you make a merge migration; `./manage.py makemigrations --merge` will do the job for you. It makes `0016_merge.py`. It doesn't do any work, just lists both of `create_taskcustom` and `opp_splits` as dependencies. Dev is the only branch where this file exists. It's not in either feature branch, and it won't ever make it to production.
+Django expects a single migration to be the 'latest' migration. When there are two 'latest' migrations, it will refuse to run until you make a merge migration; `./manage.py makemigrations --merge` will do the job for you. It makes `0016_merge.py`. It doesn't do any work, just lists both of `create_taskcustom` and `opp_splits` as dependencies. Dev is the only branch where this file exists. It's not in either feature branch, and it won't ever make it to production.
 
 While those two are being tested, a new feature branch is cut from prod. It also adds a migration: `0015_product_family`.
 
