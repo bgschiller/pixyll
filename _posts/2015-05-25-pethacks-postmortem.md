@@ -9,7 +9,7 @@ lighten_text: true
 
 From Friday evening to Sunday afternoon, I competed in the PetHacks hackathon. The task was to make a minimum viable product for a start-up that will recommend the best food for your dog based on its breed, age, weight, etc. The prize was $10,000 and 50,000 shares of stock.
 
-![](http://i.imgur.com/q3xjdBI.png)
+![]({{ site.url }}{{ site.baseurl }}/images/bart-simpson-stock.png)
 
 I guess you could call this a post-mortem, but I'm at peace with how everything fell out. I talked our team into trying a trendy new javascript framework, but 6pm on Saturday found us starting from scratch with tools we knew. This decision left us with little time to put together a final product, and whenever we faced a choice between doing things right and doing things fast we always chose the latter.
 
