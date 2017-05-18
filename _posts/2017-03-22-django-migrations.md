@@ -11,6 +11,8 @@ lighten_text: true
 
 Please do not read this as advice. Although we've spent a while thinking about it, I'm not convinced that we've arrived at the best solution. It seems to work oh-kay, but it's a bit of a pain. Rather, I'm hoping that someone will tell me I'm wrong, and demonstrate a better way. After all, "the best way to get the right answer on the Internet is not to ask a question, it's to post the wrong answer." In the meantime, this is the best way I know of to manage Django migrations under version control.
 
+*edit:* I've come across a couple other articles discussing this topic: [Zenefits](https://engineering.zenefits.com/2015/11/using-old-ideas-to-solve-new-problems/) and [DoorDash](https://blog.doordash.com/tips-for-building-high-quality-django-apps-at-scale-a5a25917b2b5) both use a migrations manifest file to artificially cause conflicts when a merge needs to be created.
+
 ## The setup
 
 Let's say the latest migration in the production branch is `0014_user_phone_num.py`. Sometimes, two different feature branches will add migrations numbered 15: `0015_create_taskcustom.py` and `0015_opp_splits.py`. First, the branch with `0015_create_taskcustom` is merged to the `dev` server. The migration is run, and it all goes swimmingly. But what happens when `0015_opp_splits` is merged?
