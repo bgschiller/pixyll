@@ -7,4 +7,4 @@ permalink: /thanks/
 As a token of my appreciation, please enjoy this cat gif.
 <hr>
 
-<img src="http://thecatapi.com/api/images/get?format=src&type=gif">
+<img src="https://thecatapi.com/api/images/get?format=src&type=gif">

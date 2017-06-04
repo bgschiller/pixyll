@@ -3,8 +3,8 @@
   <!-- My css and javascript skills are still fledgling. Beware reading this source, as it may hurt your eyes.-->
   <meta charset="utf-8" />
   <title>jQuery UI Draggable - Events</title>
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
   <style>
   .wrapper{
     overflow:hidden; /*make sure the wrapper has no dimension*/
@@ -37,7 +37,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#299a0b', end
 
 
   .box{
-    float:left; 
+    float:left;
     width:80px;
     height:80px;
     margin:8px;
@@ -154,7 +154,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#299a0b', end
         var source_box = ui.draggable.closest(".box");
         var source_num_balls = ui.draggable.data('nBalls');
         if (source_box.data('box_id') > source_num_balls){
-          console.log('can\'t move only ' + source_num_balls + 
+          console.log('can\'t move only ' + source_num_balls +
                       ' from box number ' + source_box.data('box_id')+ '!');
           return;
         }
@@ -192,7 +192,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#299a0b', end
     <button onclick="init();">New Game</button>
     <div class="wrapper" id="boxes-container"></div>
 </div>
- 
- 
+
+
 </body>
 </html>

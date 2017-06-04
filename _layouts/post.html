@@ -11,7 +11,7 @@
 
       <div class="p2 p-responsive wrap">
         <div class="measure">
-                  
+
           {% assign minutes = content | number_of_words | divided_by: 180 %}
           {% if minutes == 0 %}
           {% assign minutes = 1 %}
@@ -39,7 +39,7 @@
         {% endif %}
         {% if page.mathjax %}
         <script type="text/javascript"
-            src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+            src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
         </script>
         {% endif %}
         {% if site.disqus_shortname %}
@@ -75,4 +75,3 @@
   {% include footer.html %}
 </body>
 </html>
-
