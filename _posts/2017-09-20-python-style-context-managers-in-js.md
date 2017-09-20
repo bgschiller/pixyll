@@ -33,7 +33,8 @@ This is another example of a less-than-ideal interface where two functions must 
 
 ```javascript
 function withPreservedComponents(context, geometry_id, action) {
-  const components = componentsOnStory(context.rootState, geometry_id);
+  const components = componentsOnStory(
+    context.rootState, geometry_id);
   action();
   replaceComponents(context, components);
 }
@@ -45,30 +46,36 @@ And here's what it looks like for the caller:
 function moveFaceByOffset(context, payload) {
   // ... some code omitted for brevity
   const
-    movedPoints = verticesForFaceId(face.id, currentStoryGeometry)
+    movedPoints = verticesForFaceId(
+        face.id, currentStoryGeometry)
       .map(v => ({
         x: v.x + dx,
         y: v.y + dy,
       })),
     newGeoms = newGeometriesOfOverlappedFaces(
       movedPoints,
-      // Don't consider face we're modifying as a reason to disqualify the action.
-      geometryHelpers.exceptFace(currentStoryGeometry, face_id),
+      // Don't consider face we're modifying as a reason to
+      // disqualify the action.
+      geometryHelpers.exceptFace(
+        currentStoryGeometry, face_id),
     );
 
   // ... some code omitted for brevity
 
-  withPreservedComponents(context, currentStoryGeometry.id, () => {
-    newGeoms.forEach(newGeom => context.dispatch('replaceFacePoints', newGeom));
+  withPreservedComponents(
+    context, currentStoryGeometry.id, () => {
+      newGeoms.forEach(
+        newGeom =>
+          context.dispatch('replaceFacePoints', newGeom));
 
-    context.dispatch('replaceFacePoints', {
-      geometry_id: currentStoryGeometry.id,
-      face_id,
-      vertices: movedGeom.vertices,
-      edges: movedGeom.edges,
-      dx,
-      dy,
-    });
+      context.dispatch('replaceFacePoints', {
+        geometry_id: currentStoryGeometry.id,
+        face_id,
+        vertices: movedGeom.vertices,
+        edges: movedGeom.edges,
+        dx,
+        dy,
+      });
   });
 }
 ```
