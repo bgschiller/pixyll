@@ -3,7 +3,7 @@ layout: post
 title: Python-style Context Managers in JavaScript
 category: blog
 tags: [programming, javascript]
-feature_image: features/layered_rock.jpg
+feature_image: layered_rock.jpg
 lighten_text: true
 ---
 A language feature that I really appreciate in Python is context managers. That's what the `with` keyword does-- it starts a new context, setting up code that will be called before and after a block of code. The most common use is with resources, like opening a file. Without it, you might write
