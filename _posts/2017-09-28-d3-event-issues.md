@@ -7,8 +7,6 @@ tags: [programming, web, d3, javascript]
 
 *Cross-posted from [github.com/bgschiller/d3-event-issue](https://github.com/bgschiller/d3-event-issue)*
 
-# D3 event troubles
-
 Our story begins with some code that boils down to this:
 
 ```javascript
@@ -28,7 +26,7 @@ grid.addEventListener('mousemove', _.throttle(highlightCoordinates, 100));
 
 Lodash's throttle has `trailing` true by default (and we wanted to keep it on). The trailing call to `highlightCoordinates`, by definition, occurs *after* all of the mousemove events are done. Using `d3.mouse()` meant that we were depending on the value of `d3.event`, and it had already been cleaned up at that point.
 
-![](https://trello-attachments.s3.amazonaws.com/58d428743111af1d0a20cf28/59cbeb80295a82a03226fca5/89f83cf5e7d2392b793279b93fba1f31/capture.png)
+![]({{ site.url }}{{ site.baseurl }}/images/d3-event-issues/cant_read_sourceEvent.png)
 
 Following the advice on [this stack overflow post](https://stackoverflow.com/a/43424214/1586229), I set about modifying [lodash.throttle](https://github.com/lodash/lodash/blob/4.17.4/lodash.js#L10911) to capture the value of `d3.event`, and then put it back in place before invoking the function. Here's the interesting part of the code (or check out the [whole thing](https://github.com/NREL/openstudio-geometry-editor/blob/0790f88dd04123320278a6a1f22443690d587d29/src/utilities/d3-aware-throttle.js) if you like):
 
@@ -71,7 +69,7 @@ function invokeFunc(time) {
 
 New code, new error. Now, running this code gave the following error message:
 
-![](https://trello-attachments.s3.amazonaws.com/58d428743111af1d0a20cf28/59cbec593206a0ef014a1d0f/af6d3293fc434f38ca4946252ea78084/capture.png)
+![]({{ site.url }}{{ site.baseurl }}/images/d3-event-issues/only_has_getter.png)
 
 It seems that `d3.event` can only be read from, not written to. I wasn't able to find where that is set up in d3's code, but I did find [this test](https://github.com/d3/d3/blob/17fbf8d4b16ed19303d71dee4881d871bddbc037/test/d3-test.js#L11-L20), which suggested that I could write to `d3Selection.event`, and it would change the value of `d3.event`. Inspecting the property in node confirmed that:
 
@@ -91,7 +89,7 @@ Uncaught TypeError: Cannot read property 'sourceEvent' of null
 
 Debugging on her machine showed that *somehow*, setting d3Selection.event wasn't impacting the value of `d3.event`:
 
-![](https://trello-attachments.s3.amazonaws.com/58d428743111af1d0a20cf28/59cd21030a4bec508e696a3c/bcb076afbf2615dcafe69a7d7deb9140/capture.png)
+![]({{ site.url }}{{ site.baseurl }}/images/d3-event-issues/d3Selection_no_impact.png)
 
 ## The story continues
 
@@ -124,7 +122,7 @@ Uncaught TypeError: measure.select(...).attr(...).attr(...).attr(...).attrs is n
 
 ## Potentially Relevant Links
 
-- https://github.com/d3/d3/issues/2733#issuecomment-271321156
+- [https://github.com/d3/d3/issues/2733#issuecomment-271321156]()
 
 ## A Solution! but not a satisfying one...
 

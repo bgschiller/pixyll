@@ -4,7 +4,7 @@ email:       bgschiller@gmail.com
 author:      Brian Schiller
 description: "Writings on Mathematics, Software, and Teaching."
 baseurl:     "/blog"
-url:         "https://brianschiller.com"
+#url:         "https://brianschiller.com"
 
 # Google analytics
 google_analytics: 'UA-42131022-1'
@@ -33,5 +33,5 @@ flattr_button:
 permalink:    /:year/:month/:day/:title
 sass:
   compressed: true
-gems:
+plugins:
   - jekyll-gist
