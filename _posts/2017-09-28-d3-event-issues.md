@@ -93,7 +93,7 @@ Debugging on her machine showed that *somehow*, setting d3Selection.event wasn't
 
 ## <s>The story continues</s> (solved it. see below)
 
-<s>I still haven't solved this yet. I don't know why it works on my machine but not Katie's.</s> I put together this repo to make it easier to investigate. Check out
+<p><s>I haven't solved this yet. I don't know why it works on my machine but not Katie's.</s> I put together this repo to make it easier to investigate. Check out</p>
 
 - [setting d3.event directly](https://brianschiller.com/d3-event-issue/dist/setD3Event.html) (and the [source](https://github.com/bgschiller/d3-event-issue/tree/master/src/index.js))
 - [setting d3Selection.event](https://brianschiller.com/d3-event-issue/dist/setD3SelectionEvent.html) (and the [source](https://github.com/bgschiller/d3-event-issue/tree/master/src/selectionIndex.js)
