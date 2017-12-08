@@ -40,7 +40,7 @@ export function Story(name) {
 
 If you're very clever, you might notice a problem with this approach. If a schema definition includes an array property, our factory function will put the *very same array* in each Story it creates. Pushing to one story's `spaces` property will add a value to *every* story. It even adds the new value to the array inside the default value, so it affects stories that haven't even been created yet.
 
-The solution is that each time we use the default value, we should make sure that it is a fresh version. I wasn't a fan of requiring every use of the defaults object to include a `_.cloneDeep`. It seemed repetitive, and need extra code at the call-site is an ugly pattern.
+The solution is that each time we use the default value, we should make sure that it is a fresh version. I wasn't a fan of requiring every use of the defaults object to include a `_.cloneDeep`. It seemed repetitive, and needing extra code at every call-site of a function is a code smell. Couldn't that extra code be part of the exported api?
 
 Here's what I came up with using a Proxy object to enforce making a deep copy on read:
 
