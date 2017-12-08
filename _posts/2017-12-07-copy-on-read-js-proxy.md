@@ -56,4 +56,4 @@ export const defaults = new Proxy(rawDefaults, {
 });
 ```
 
-Now code using the defaults object is *unabled* to mess with the original values.
+Now code using the defaults object is *unable* to mess with the original values.
