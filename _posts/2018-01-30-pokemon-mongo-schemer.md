@@ -82,7 +82,7 @@ const schema = require('./schema.json');
 
 Okay, so far so good. Now we have a bit of confidence that our schema at least didn't crash things. We can check that Bulbasaur was indeed added using the `mongo` shell.
 
-## Good documents succeed; bad docs are the true test
+### Good documents succeed; bad docs are the true test
 
 Is our schema even doing anything? Let's try adding something nonsense, to make sure.
 
@@ -119,7 +119,7 @@ Alright! That's a little more useful. It would be nice if we could get errors li
 4. Figure out which document was failing validation (in the `*Many` cases).
 5. For an update, synthesize the document that *would have been created* if the operation had succeeded.
 
-## mongo-schemer enters, stage right
+### mongo-schemer enters, stage right
 
 Actually, all that hard work is already done! At [devetry](https://devetry.com/), we made and open-sourced a library to do just that: [mongo-schemer](https://github.com/devetry/mongo-schemer). Let's add it to our script.
 
@@ -153,7 +153,7 @@ Now let's run our Norberta script again. This time, it reports on the errors:
     message: 'should be object' } ]
 ```
 
-## Stricter Schema: stats
+### Stricter Schema: stats
 
 We're now confident that the schema is truly guarding our collection. Let's make it a bit more strict. How about starting with that `stats` property. A stat is a number between 0 and 255. We can define a "Stat" in our schema to mean just that. Each pokemon should have one for `hp`, `attack`, `defense`, `spattack`, `spdefense`, and `speed`.
 
