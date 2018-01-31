@@ -11,7 +11,7 @@ But we're not just gonna throw pokemon into mongo in a jumble! I said we were tr
 
 The code at each step is available as the sequence of commits in [bgschiller/pokemon-mongo-schemer](https://github.com/bgschiller/pokemon-mongo-schemer). Check out the [commit listing](https://github.com/bgschiller/pokemon-mongo-schemer/commits/master) to jump around.
 
-Let's get started. I'm looking at FILE_URL_HERE, which is based on [ATL-WDI-Exercises/mongo-pokemon](https://github.com/ATL-WDI-Exercises/mongo-pokemon). I've added a few errors so that we can stress-test our schema. We don't want to let Gary pull a fast one on us by adding some pokemon that breaks the rules!
+Let's get started. I'm looking at [pokemon.json](https://raw.githubusercontent.com/bgschiller/pokemon-mongo-schemer/master/pokemon.json), which is based on [ATL-WDI-Exercises/mongo-pokemon](https://github.com/ATL-WDI-Exercises/mongo-pokemon). I've added a few errors so that we can stress-test our schema. We don't want to let Gary pull a fast one on us by adding some pokemon that breaks the rules!
 
 Here's our schema to begin with.
 
