@@ -49,7 +49,7 @@ My first attempt was a bust. Cloudfront has settings to tack on custom headers t
 
 Following the advice of that Stack Overflow answer, I wrote a custom Lambda@Edge function to modify the request on its way out to the origin:
 
-```
+```javascript
 exports.handler = (event, context, callback) => {
     const request = event.Records[0].cf.request;
     request.headers.host[0].value = 'brians-test-subdomain.ngrok.io';
