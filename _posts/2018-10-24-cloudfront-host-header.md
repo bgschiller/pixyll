@@ -24,7 +24,7 @@ Once those updated, I was getting a new error message: an opaque 503 over http. 
 > http://206.191.153.167/api/healthcheck also returns 503.
 > 206.191.153.167 being the IP i get from DNS for product.api.company.com
 
-This was the seed of the solution. Hitting the api directly by api, bypassing cloudfront, gave me the _same_ error message as when I hit the api through cloudfront. Why would hitting `206.191.153.167` directly cause a 503? ThreatX must be serving multiple virtual hosts from the same IP address. When request hit the IP directly, they aren't able to figure out which site to route them to.
+This was the seed of the solution. Hitting the api directly, bypassing cloudfront, gave me the _same_ error message as when I hit the api via cloudfront. Why would hitting `206.191.153.167` directly cause a 503? ThreatX must be serving multiple virtual hosts from the same IP address. When requests hit the IP directly, they aren't able to figure out which site to route them to.
 
 Scott pointed out that this could explain the whole of the problem. Cloudfront would show a 502 because when connecting over https, ThreatX would also not be able to figure out which certificate it should use, causing the SSL handshake to fail.
 
