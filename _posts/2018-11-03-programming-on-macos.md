@@ -7,9 +7,11 @@ tags: [programming, macos]
 
 Many of my coworkers are about to switch to macs for their development machines, so this seems like a good opportunity to make recommendations for MacOS software that I find useful.
 
+Many of these depend on the xcode command line tools. I think these consist of some compilers maybe? Anyway, install them first with `xcode-select --install`.
+
 ### Homebrew
 
-The missing package manager for mac. This is essential for programmers. Many software you'll want to download is easiest to install using homebrew. Get it at [brew.sh](https://brew.sh/).
+The missing package manager for mac. This is essential for programmers. Many software you'll want is easiest to install using homebrew. Get it at [brew.sh](https://brew.sh/).
 
 ### Spectacle
 
@@ -59,3 +61,11 @@ pipenv --python $(pyenv which python)
 ### Postico
 
 The best darn database GUI I've ever used. Only for Postgres, though.
+
+### Node
+
+Similar to python, you'll want to have a way to switch between different versions of node for different projects. `nvm` is a project that lets you do this.
+
+Run the install script from [creationix/nvm](https://github.com/creationix/nvm#install-script). As part of the script, a new line is written to your .zshrc, so you'll have to open a new terminal in order to use nvm.
+
+Run `nvm install 10.11.0` (or whatever version you want). You can see available versions with `nvm ls-remote`. It's useful to have a default version set: `nvm alias default 10.11.0`
