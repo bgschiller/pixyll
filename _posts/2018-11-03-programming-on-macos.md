@@ -58,6 +58,30 @@ pyenv local 3.6.6 # or whatever version you need for this project
 pipenv --python $(pyenv which python)
 ```
 
+#### TypeError: 'module' object is not callable
+
+Lately, when running `pipenv install` on a fresh pipenv, I get the following error:
+
+```
+➜  WebScraping git:(web-scraping) ✗ pipenv install
+Pipfile.lock (2ad753) out of date, updating to (492d77)...
+Locking [dev-packages] dependencies...
+tils.py", line 402, in resolve_deps
+    req_dir=req_dir
+  File "/Library/Python/2.7/site-packages/pipenv/utils.py", line 250, in actually_resolve_deps
+    req = Requirement.from_line(dep)
+  File "/Library/Python/2.7/site-packages/pipenv/vendor/requirementslib/models/requirements.py", line 704, in from_line
+    line, extras = _strip_extras(line)
+TypeError: 'module' object is not callable
+```
+
+This bug is tracked at [pypa/pipenv#2924](https://github.com/pypa/pipenv/issues/2924). Luckily, there's a really easy fix. Just run:
+
+```
+pipenv run pip install pip==18.0
+# now pipenv install will work fine
+```
+
 ### Postico
 
 The best darn database GUI I've ever used. Only for Postgres, though.
