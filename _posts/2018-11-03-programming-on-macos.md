@@ -31,13 +31,31 @@ I also installed [fzf](https://remysharp.com/2018/08/23/cli-improved#fzf--ctrlr)
 
 ### Alfred
 
-This is one of the only paid software on this list. There's a free version, but it doesn't do any of the good stuff. I use alfred primarily for
+This is one of the only paid items on the list. There's a free version, but it doesn't do any of the good stuff. I use Alfred primarily for
 
 - Clipboard history. ⇧⌘v (shift + command + v) opens a dialog to let me choose from any of my recently copied items.
 - [Clipbox](https://github.com/bgschiller/alfred-clipbox). Press a shortcut to quickly take a screenshot (⇧⌘x). It will be uploaded to trello, and the direct url placed on your clipboard. Also works for files and text (⇧⌘c), and screen recordings (⇧⌘g).
 - [Password management](https://brianschiller.com/blog/2016/08/31/gnu-pass-alfred). Really GNU Pass is the brains behind my password management setup, but Alfred provides the UI.
 
 There's a ton of other extensions, but I haven't taken the time to learn any of them.
+
+### ngrok
+
+Not exactly a mac-specific item, but I find ngrok to be an invaluable tool for web development. It allows you publicly expose a port on localhost, avoiding NAT and firewall issues.
+
+Imagine you are running a local web server on port 3000, and you want to get feedback from a friend. Run `ngrok http 3000` (or `ngrok http --host-header=rewrite 3000`, if you're using webpack-dev-server) and ngrok will give you a public URL that makes your service accessible to the wider internet.
+
+I use ngrok for
+- testing how a site looks and feels from my phone.
+- sharing the app to go along with a livecoding session during class.
+- sharing my database with coworkers (`ngrok tcp 5432`, but not really recommended unless it's for a brief period).
+- sidestepping OAuth redirect URIs that require HTTPS
+- [testing the headers sent by cloudfront](https://brianschiller.com/blog/2018/10/24/cloudfront-host-header).
+- [pair programming with remote coworkers](https://brianschiller.com/blog/2014/07/18/pair-programming-wemux).
+
+### keybase
+
+Keybase is an end-to-end encrypted filesystem and messager. I mostly use it to store credentials that I need to share with other people I work with.
 
 ## Depending on your work
 
@@ -82,6 +100,10 @@ pipenv run pip install pip==18.0
 # now pipenv install will work fine
 ```
 
+### Postgres
+
+I used to recommend Postgres.app, but I tried using `brew install postgresql` this time and it worked without problem.
+
 ### Postico
 
 The best darn database GUI I've ever used. Only for Postgres, though.
@@ -93,3 +115,21 @@ Similar to python, you'll want to have a way to switch between different version
 Run the install script from [creationix/nvm](https://github.com/creationix/nvm#install-script). As part of the script, a new line is written to your .zshrc, so you'll have to open a new terminal in order to use nvm.
 
 Run `nvm install 10.11.0` (or whatever version you want). You can see available versions with `nvm ls-remote`. It's useful to have a default version set: `nvm alias default 10.11.0`
+
+## Setup
+
+### Finder settings
+
+The default Finder sidebar includes things I don't care about at all (`Recents`, `iCloud Drive`), and is missing my home folder. You can fix it in the finder preferences.
+
+I also set it to open new windows to my home folder, rather than `Recents`.
+
+![]({{ site.url }}{{ site.baseurl }}/images/finder-sidebar.png)
+
+### Night Shift
+
+In the settings, you can turn on "Night Shift" to make the display a little less blue after sundown.
+
+If you're watching a movie, or doing work where you need to see true colors, there's an option in the Notification Center to quickly disable it until the next sundown.
+
+![]({{ site.url }}{{ site.baseurl }}/images/night-shift.png)
