@@ -57,6 +57,23 @@ I use ngrok for
 
 Keybase is an end-to-end encrypted filesystem and messager. I mostly use it to store credentials that I need to share with other people I work with.
 
+### Git aliases
+
+I find these aliases invaluable, and really miss them when they're gone:
+
+```bash
+$ cat ~/.gitconfig
+[user]
+# Please adapt and uncomment the following lines:
+	name = James Bond
+	email = james.bond@mi6.gov.uk
+[alias]
+	pu = !git push -u origin $(git rev-parse --abbrev-ref HEAD)
+	recent = "!f() { git for-each-ref --count=${1:-10} --sort=-committerdate refs/heads/ --format='%(refname:short)'; }; f"
+```
+
+The first one is a shorthand for `git push --set-upstream origin name-of-current-branch`. The second one prints my the branches I've been on most recently (10 by default).
+
 ## Depending on your work
 
 These may not be necessary, depending on what you're working on.
