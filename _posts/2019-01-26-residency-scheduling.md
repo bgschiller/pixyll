@@ -5,7 +5,7 @@ category: blog
 tags: [programming, optimization, python]
 ---
 
-Last year, Morgan was given the responsibility of planning the schedule for her residency program—who would be working which rotation each month. She was griping to me about all the requirements: "Everyone has to do three months of FMS", but "No one can do more than two months of FMS in a row". "Everyone has to do a month of School-based Peds", but "No one can do School-based Peds in July or August (no school)".
+Last year, Morgan was given the responsibility of planning the schedule for her residency program—who would be working which rotation each month. She was describing all the requirements: "Everyone has to do three months of FMS", but "No one can do more than two months of FMS in a row". "Everyone has to do a month of School-based Peds", but "No one can do School-based Peds in July or August (no school)".
 
 As she described the difficult constraints, I was quietly nursing a geeky excitement. This sounded like a great problem for a computer to solve!  I asked if I could take the scheduling task off of Morgan's hands, and she graciously agreed.
 
@@ -13,7 +13,7 @@ Normally, the scheduling is done by hand, moving around index cards or spreadshe
 
 I set to work writing a program to generate the best possible schedule given the constraints and everyone's schedule preferences ("I want to be on vacation in September", "I'd like to do OB as soon as possible"). To avoid burying the lede too far, the schedule came out great! We were able to satisfy all the constraints, as well as *every single resident request*.
 
-With scheduling season coming up again, I thought it would be worthwhile to write up my method. If it helps you, I'd love to hear about it! Please write me an email at `brian (at sign) (this domain)`.
+With scheduling season coming up again, I thought it would be worthwhile to write up my method. If it helps you, I'd love to hear about it! Please write me an email at `brian (a) brianschiller.com`.
 
 Note: if you don't care about how all of this works, and just want an optimal residency schedule without fussing over it, [click here](#hire-me-to-do-it)
 
@@ -90,13 +90,13 @@ These come in many forms. I'll list some basic ones, as well as a couple that we
 
 There were a few other constraints that didn't fit neatly into one of these categories. The residents are divided into two groups: Denver Health track and University Hospital track. All DH track residents must do PTF during the same month, and it must be different from the month when all UH track residents do PTF.
 
-Additionally, the program expressed a preference (but not a hard constraint) that DH residents should rotate at DH when there was an option, and similarly UH residents should rotate at UH when possible.
+Additionally, the program expressed a preference (but not a hard constraint) that DH residents should rotate at DH when there is an option, and similarly UH residents should rotate at UH when possible.
 
 ## The Model
 
 I decided to approach this as an Integer Lineary Programming problem. Since fast and well-tested libraries already exist for solving Linear Programming problems, this meant my work was reduced to phrasing the problem in LP terms.
 
-LP doesn't operate at levels like "What does John's schedule look like?", or "Try to schedule Anita for alternating inpatient/outpatient". Instead, we choose variables to the outcome, and then write equations that represent our goals and constraints in terms of those variables.
+LP doesn't operate at levels like "What does John's schedule look like?", or "Try to schedule Anita for alternating inpatient/outpatient". Instead, we choose variables to represent the outcome, and then write equations that represent our goals and constraints in terms of those variables.
 
 The core variables I decided to work with were all of the form:
 
@@ -104,7 +104,7 @@ The core variables I decided to work with were all of the form:
 <resident> will work <rotation> during <month> (True/False)
 ```
 
-With a value like that for every combination of resident, rotation, month we are able to describe every constraint and goal. In python, using the `citrus` library (a small convenience wrapper around `pulp` that I wrote), we define our variables like so:
+With a value like that for every combination of resident, rotation, and month we are able to describe every constraint and goal. In python, using the `citrus` library (a small convenience wrapper around `pulp` that I wrote), we define our variables like so:
 
 ```python
 import citrus
@@ -130,10 +130,10 @@ ROTATIONS = INPATIENT_ROTATIONS + OUTPATIENT_ROTATIONS
 
 
 DH_RESIDENTS = [
-    'Weeks', 'Schiller', 'Mathews', 'Wong',
+    'John', 'Morgan', 'Anita', 'Alicia',
 ]
 UH_RESIDENTS = [
-    'Herring', 'Utter', 'Rabaza', 'Malam', 'Spadafore', 'Malki',
+    'Kenny', 'Jeff', 'Cristi', 'Naomi', 'Steve', 'Alisa',
 ]
 RESIDENTS = DH_RESIDENTS + UH_RESIDENTS
 
@@ -146,17 +146,17 @@ x = model.dicts(
     for resident in RESIDENTS),
   cat=pulp.LpBinary)
 
-# x['Jul', 'FMS', 'Weeks'] represents the True/False
-# value: "John Weeks is on FMS during July"
+# x['Jul', 'FMS', 'John'] represents the True/False
+# value: "John is on FMS during July"
 ```
 
 ### Curriculum constraints
 
-To express our curriculum constraints, we combine the variables we just made into statements about how many are true. To say "Cristy Rabaza must do 3 months of FMS", we write:
+To express our curriculum constraints, we combine the variables we just made into statements about how many are true. To say "Cristi must do 3 months of FMS", we write:
 
 ```python
 model.addConstraint(
-  sum(x[month, 'FMS', 'Rabaza'] for month in MONTHS) == 3,
+  sum(x[month, 'FMS', 'Cristi'] for month in MONTHS) == 3,
   "Rabaza must do 3 months of FMS")
 ```
 
@@ -183,7 +183,7 @@ for resident in RESIDENTS:
 
 ### No Time-Turners Constraints
 
-This is the rule that says no resident can do more than 1 rotation in a month. Intuitively, this one seems to go without saying. However, since we've reduced the problem to a bag of True/False variables, the computer ascribes no meaning to the variables other than what we tell it. We have to spell it out.
+This is the rule that says no resident can do more than one rotation in a month. Intuitively, this seems to go without saying. However, since we've reduced the problem to a bag of True/False value, the computer ascribes no meaning to the variables other than what we tell it. We have to spell it out.
 
 ```python
 for resident in RESIDENTS:
@@ -232,7 +232,7 @@ But what happens if Morgan is just more picky than Steve, and lists more prefere
 
 #### Influence limits
 
-I decided to cap each resident's influence at `1`. `1` what, you might ask? Well, `1` objective-function-unit. The unit is arbitrary, we just have to be consistent. For some LP problems, the objective function represents dollars or some other real value. For this problem, we can think of it as "total resident satisfaction".
+I decided to cap each resident's influence at One. One what, you might ask? Well, one objective-function-unit. The unit is arbitrary, we just have to be consistent. For some LP problems, the objective function represents dollars or some other real value. For this problem, we can think of it as "total resident satisfaction".
 
 I also wanted to allow folks to rank their preferences. If Alicia lists 3 preferences in order of how much she cares about them, the model should take into account how important each item is to her.
 
@@ -248,23 +248,27 @@ With this in mind, we came up with this weighting scheme, where the sum of the w
 ##### Anita's Goal
 
 > Highly preferred:
+>
 > #1 A vacation-able month in December
+>
 > Also would be nice:
+>
 > #2 Maximum DH months (i.e., MICU, Peds)
+>
 > #3 Alternating months of inpatient and outpatient throughout the year, within reason (like two consecutive months of either is not a big deal)
 
-The first two were not too difficult—I gave 3/6 of Anita's influence to #1 and 2/6 to doing MICU and Peds at DH (1/6 each). The hard part was the "alternating months of inpatient and outpatient". I decided to interpret that as "no two inpatient in a row", since there are 6 inpatient and 6 outpatient months.
+The first two were not too difficult—I gave 3/6 of Anita's influence to #1 and 2/6 to MICU and Peds at DH (1/6 each). The hard part was the "alternating months of inpatient and outpatient". I decided to interpret that as "no two inpatient in a row", since there are 6 inpatient and 6 outpatient months.
 
 ```python
 anita_objective = (
-  3/6 * sum(x['Dec', rotation, 'Mathews'] for rotation in VACATIONABLE_ROTATIONS) +
-  1/6 * sum(x[month, 'MICU-DH', 'Mathews'] for month in MONTHS) +
-  1/6 * sum(x[month, 'Inpatient Peds DH', 'Mathews' for month in MONTHS) +
-  1/6 * no_two_inpatient_in_a_row('Mathews')
+  3/6 * sum(x['Dec', rotation, 'Anita'] for rotation in VACATIONABLE_ROTATIONS) +
+  1/6 * sum(x[month, 'MICU-DH', 'Anita'] for month in MONTHS) +
+  1/6 * sum(x[month, 'Inpatient Peds DH', 'Anita' for month in MONTHS) +
+  1/6 * no_two_inpatient_in_a_row('Anita')
 )
 ```
 
-So, how to define that `no_two_inpatient_in_a_row` function using linear constraints that our solver can understand? We can say "For the two consecutive months `m1` and `m2`, they should not both be inpatient". We also want to make sure that the term we return from the helper function is never more than 1, and is exactly 1 when all the subgoals are met. That's the reason for using `avg` rather than `sum` on the last line.
+So, how to define that `no_two_inpatient_in_a_row` function using linear constraints that our solver can understand? We can say "For the two consecutive months `m1` and `m2`, they should not both be inpatient". We also want to make sure that the term we return from this helper function is never more than one, and is exactly one when all the subgoals are met. That's the reason for using `avg` rather than `sum` on the last line.
 
 ```python
 def no_two_inpatient_in_a_row(resident):
@@ -297,15 +301,16 @@ This part felt a little bit more like an art than a science. There's more than o
 ##### Kenny's Goal
 
 > 1) A vacationable rotation in September (preferably an elective, but Gyn, MSK-1, or school Peds would work, too).
+>
 > 2) Something outpatient in December (elective, Gyn, MSK-1, or school Peds).
 
 Originally, I wrote the following:
 
 ```python
 kenny_objective = (
-  3/6 * x['Sep', 'Elective', 'Herring'] +
-  2/6 * sum(x['Sep', rotation, 'Herring'] for rotation in ('Gyn', 'MSK-1', 'School-based Peds')) +
-  1/6 * sum(x['Dec', rotation, 'Herring'] for rotation in ('Elective', 'Gyn', 'MSK-1', 'School-based Peds'))
+  3/6 * x['Sep', 'Elective', 'Kenny'] +
+  2/6 * sum(x['Sep', rotation, 'Kenny'] for rotation in ('Gyn', 'MSK-1', 'School-based Peds')) +
+  1/6 * sum(x['Dec', rotation, 'Kenny'] for rotation in ('Elective', 'Gyn', 'MSK-1', 'School-based Peds'))
 )
 resident_objective.append(kenny_objective)
 ```
@@ -314,10 +319,10 @@ However, look at those first two terms. They're both concerned with the rotation
 
 ```python
 kenny_objective = (
-    2/3 * x['Sep', 'Elective', 'Herring'] +
-    1/3 * sum(x['Sep', rotation, 'Herring'] for rotation in ('Gyn', 'MSK-1', 'School-based Peds')) +
+    2/3 * x['Sep', 'Elective', 'Kenny'] +
+    1/3 * sum(x['Sep', rotation, 'Kenny'] for rotation in ('Gyn', 'MSK-1', 'School-based Peds')) +
     # Prior two conflict, so it's okay that the weights sum to over 1
-    1/3 * sum(x['Dec', rotation, 'Herring'] for rotation in ('Elective', 'Gyn', 'MSK-1', 'School-based Peds'))
+    1/3 * sum(x['Dec', rotation, 'Kenny'] for rotation in ('Elective', 'Gyn', 'MSK-1', 'School-based Peds'))
 )
 resident_objective.append(kenny_objective)
 ```
@@ -325,7 +330,9 @@ resident_objective.append(kenny_objective)
 ##### Cristi's Goal
 
 > 1) MICU as early as possible
+>
 > 2) Ob as early as possible
+>
 > 3) school based Peds in December
 
 Another challenge! How to write `as_early_as_possible` in terms of an LP? It should produce a term that evaluates to one if Cristi is on MICU during the first month, and decrease smoothly from there.
@@ -342,10 +349,10 @@ Now to get the weights right. One complication is that MICU is offered at both D
 
 ```python
 cristi_objective = (
-  3/6 * as_early_as_possible('Rabaza', 'MICU-DH') +
-  3/6 * as_early_as_possible('Rabaza', 'MICU-UH') +
-  2/6 * as_early_as_possible('Rabaza', 'OB') +
-  1/3 * x['Dec', 'School-based Peds', 'Rabaza']
+  3/6 * as_early_as_possible('Cristi', 'MICU-DH') +
+  3/6 * as_early_as_possible('Cristi', 'MICU-UH') +
+  2/6 * as_early_as_possible('Cristi', 'OB') +
+  1/3 * x['Dec', 'School-based Peds', 'Cristi']
 )
 resident_objective.append(cristi_objective)
 ```
@@ -420,27 +427,27 @@ Comes out looking something like this
 
 | Month   | Jul                 | Aug   | Sep      | Oct               | ... |
 |---------|---------------------|-------|----------|-------------------|-----|
-| Herring | Inpatient Peds CHCO | MSK-1 | Elective | FMS               | ... |
-| Malam   | MSK-1               | FMS   | Elective | School-based Peds | ... |
+| Kenny | Inpatient Peds CHCO | MSK-1 | Elective | FMS               | ... |
+| Naomi   | MSK-1               | FMS   | Elective | School-based Peds | ... |
 | ...     | ...                 | ...   | ...      | ...               | ... |
 
 or like this (depending on choice of pivot)
 
 | Month    | Jul               | Aug                   | Sep            | Oct               | ... |
 |----------|-------------------|-----------------------|----------------|-------------------|-----|
-| Elective | Malki             | Utter                 | Herring, Malam | Schiller, Mathews | ... |
-| FMS      | Mathews, Spadafor | Schiller, Wong, Malam | Mathews, Utter | Wong, Herring     | ... |
+| Elective | Alisa             | Jeff                 | Kenny, Naomi | Morgan, Anita | ... |
+| FMS      | Anita, Steve | Morgan, Alicia, Naomi | Anita, Jeff | Alicia, Kenny     | ... |
 | ...      | ...               | ...                   | ...            | ...               | ... |
 
 
 
 ### Do it Yourself
 
-Please feel free to follow this method to make the best possible schedule for your own residency program! The code is available at [github.com/bgschiller/pgy2-schedule](https://github.com/bgschiller/pgy2-schedule), and I'm happy to answer questions or give advice by email: `brian (at-sign) (this domain)`.
+Please feel free to follow this method to make the best possible schedule for your own residency program! The code is available at [github.com/bgschiller/pgy2-schedule](https://github.com/bgschiller/pgy2-schedule), and I'm happy to answer questions or give advice by email: `brian (a) brianschiller.com` (or use the [contact form](https://brianschiller.com/blog/contact/)).
 
 Please let me know how it goes! I'm especially interested if you come across some constraints or goals that are difficult to phrase using this model.
 
 ### Hire me to do it
 
-I'm hoping to eventually turn this into a self-service app, but have decided I don't know enough about the problem yet. A great way to learn is to work on more examples! If you'd like to have me make an optimal schedule for your residency program, send me an email at `brian (at-sign) (this domain)` or use the [contact form](https://brianschiller.com/blog/contact/) on this website.
+I'm hoping to eventually turn this into a self-service app, but have decided I don't know enough about the problem yet. A great way to learn is to work on more examples! If you'd like to have me make an optimal schedule for your residency program, send me an email at `brian (a) (brianschiller.com)` or use the [contact form](https://brianschiller.com/blog/contact/) on this website.
 
