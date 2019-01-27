@@ -45,41 +45,28 @@ The residency program has an obligation to staff various teams with specific num
 
 To collect everyone's preferences, Morgan sent out an email:
 
-> Hey Friends! So excited to be looking ahead to this next stage in our residency training, and so excited we get to do it together! This email will be long, but please note action items below:
+> Hey Friends! So excited to be looking ahead to this next stage in our residency training, and so excited we get to do it together!
 >
-> 1) Reply by 2359 on Friday (tomorrow) to let me know your date preference for getting together to develop a final schedule
->
-> 2) Read all of the instructions for building your schedule
->
-> 3) Send me your scheduling requests by Wednesday Feb 22
->
-> Here's a brief summary the way I'm planning to do this:
+> Here's a brief summary of the way I'm planning to do this:
 >
 > - You will all send me your scheduling requests (see details below)
 > - Brian has developed a computer program that will accept everyone's preferences and the schedule requirements and will produce a tentative schedule
-> - I will send out the computer-generated tentative schedule by Friday or Saturday of next week for everyone to review.
-> - On Saturday or Sunday evening of next week, I will have everyone over to my house to make adjustments to the computer-generated schedule as needed
+> - I will send out the computer-generated tentative schedule for everyone to review, then we can make additional changes as desired.
 >
-> Please email or text me tonight or tomorrow to let me know if you prefer Saturday or Sunday evening for the get-together.
+> Using the requirements that Amelia sent out, please send me a list of your schedule preferences. This should not be example schedules, but rather characteristics that you would like in your schedule. Here is an example:
 >
-> Then, using the details that Amelia sent out, please send me a list of your schedule preferences. This should not be example schedules, but rather characteristics that you would like in your schedule. Here is an example:
 > #1 "I want to be on outpatient in March"
+>
 > #2 "I would like my electives to be in October and February"
+>
 > #3 "I would like to do MICU in July, August, or September"
 >
 > Please rank your requests in order of importance. Note that by making more requests, the requests that you make will be relatively diluted (i.e. if I have 4 requests and Alicia has 1 request, Alicia is more likely to get her 1 request than I am to get my #1 ranked request). If there are any requests that you have that are absolute musts (i.e. "I'm getting married in April and absolutely need that month as an elective"), please let me know.
 >
 > Using everyone's ranked requests and the requirements laid out by the residency, the computer program will spit out a schedule that balances total happiness and fairness to produce a schedule. If you're curious, Brian is using a method called linear optimization, and he would be thrilled to talk to you about it if you have questions 😉
 >
-> Again, please send me your final list of requests no later than Wednesday February 22nd.
->
-> If you guys have any questions or concerns about this process, or are uncomfortable with the plan for any reason, please let me know and we can adjust accordingly!
->
-> Hugs and High Fives,
->
-> Morgan S
 
-These come in many forms. I'll list some basic ones, as well as a couple that were more difficult to achieve.
+The resident preferences came in many forms. I'll list some basic ones, as well as a couple that were more difficult to achieve.
 
 - Naomi would like a vacation-eligible month in September
 - Anita would like as many DH months as possible (Inpatient Peds and MICU can both be done at either DH or UH)
