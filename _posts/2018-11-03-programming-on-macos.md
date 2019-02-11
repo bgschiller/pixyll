@@ -46,6 +46,7 @@ Not exactly a mac-specific item, but I find ngrok to be an invaluable tool for w
 Imagine you are running a local web server on port 3000, and you want to get feedback from a friend. Run `ngrok http 3000` (or `ngrok http --host-header=rewrite 3000`, if you're using webpack-dev-server) and ngrok will give you a public URL that makes your service accessible to the wider internet.
 
 I use ngrok for
+
 - testing how a site looks and feels from my phone.
 - sharing the app to go along with a livecoding session during class.
 - sharing my database with coworkers (`ngrok tcp 5432`, but not really recommended unless it's for a brief period).
@@ -119,7 +120,7 @@ pipenv run pip install pip==18.0
 
 ### Postgres
 
-I used to recommend Postgres.app, but I tried using `brew install postgresql` this time and it worked without problem.
+~I used to recommend Postgres.app, but I tried using `brew install postgresql` this time and it worked without problem.~ Nope, this worked for a couple months and then pooped out on me. I recommend using [Postgres.app](https://postgresapp.com/) for all your PostgreSQL needs.
 
 ### Postico
 
