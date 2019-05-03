@@ -18,14 +18,13 @@ Either choice is defensible for the random number example. However, the adage gu
 
 ### To build: a SortedList
 
-We'd like to make a SortedList data structure. By keeping the elements in sorted order, we can make the "does this list contain `x`?" operation _really fast_. Insert and delete operations will be a bit slower, but we are willing to pay that price for some use cases.
+We'd like to make a SortedList data structure. By keeping the elements in sorted order we can make the "does this list contain `x`?" operation _really fast_. Insert and delete operations will be a bit slower, but we are willing to pay that price for some use cases.
 
 We'll use the Python standard library's `bisect` module to do most of the heavy lifting. The `bisect` function tells you what index to find an item, assuming the list is sorted. The `insort` function (a pun: "insert sorted") performs an insert to a sorted list in the right spot to keep it sorted. That's exactly what we need! This means we can focus almost entirely on the differences between our two approaches.
 
 Here's how our sorted lists should behave:
 
 ```python
-
 sl = SortedList()
 for elem in (12, 4, 15, 2):
     sl.insert(elem)
@@ -196,5 +195,5 @@ Composition is safer, clearer, and (with some help from `superdelegate`) almost 
 
 ### References
 
-- https://code.activestate.com/recipes/577197-sortedcollection/
-- https://docs.python.org/2/library/bisect.html
+- [https://code.activestate.com/recipes/577197-sortedcollection/](https://code.activestate.com/recipes/577197-sortedcollection/)
+- [https://docs.python.org/2/library/bisect.html](https://docs.python.org/2/library/bisect.html)
