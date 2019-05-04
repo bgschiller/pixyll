@@ -191,7 +191,7 @@ Composition is safer, clearer, and (with some help from `superdelegate`) almost 
 
 - When you really want to accept _all_ behavior of parent class (even future changes we don't know about yet). I did this in [bgschiller/citrus](https://github.com/bgschiller/citrus) because I wanted the derived objects to be able to be treated as if they were the parent type in all situations.
 - When it's the way a framework wants you to customize behavior. Django's Class-based Views are a good example of this.
-- When there's some weird metaprogramming going on. Think SqlAlchemy's DeclarativeBase models, or WTForms classes.
+- When there's some weird metaclass going on. Think SqlAlchemy's DeclarativeBase models, or WTForms classes.
 
 ### References
 
