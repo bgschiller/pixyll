@@ -43,7 +43,7 @@ In addition to providing caching, SSL, and automatic gzipping, CloudFront is a _
 
 There are many suggestions to use CloudFront's "Custom Error Response" feature in order to achieve pretty push-state-style URLs. When CloudFront receives a request to `/login` it will dutifully forward that request to your S3 origin. S3, remember, knows nothing about any file called `login` so it responds with a 404. With a Custom Error Response, CloudFront can be configured to transform that 404 NOT FOUND into a 200 OK where the content is from `index.html`. That's exactly what we need for client-side routing!
 
-![]({{ site.url }}{{ site.baseurl }}/images/custom_error_response.png)
+![]({{ site.url }}{{ site.baseurl }}/images/cloudfront_custom_error_response.png)
 
 The Custom Error Response method works well, but it has a drawback. It turns _all_ 404s into 200s with `index.html` for the body. That isn't a problem yet, but we're about to set up our API so it is accessible at `mysite.com/api/*` (in the next section). It can cause some confusing bugs if your API's 404 responses are being silently rewritten into 200s with an HTML body!
 
