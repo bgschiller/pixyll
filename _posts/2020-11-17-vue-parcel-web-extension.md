@@ -19,7 +19,7 @@ npm init -y # set up a package.json, accepting all default
 npm install --save-dev parcel parcel-plugin-web-extension
 ```
 
-Next, borrow a couple of scripts we'll need for building the release: `scripts/remove-evals.js`, `scripts/build-zip.js`. I got these from [vue-chrome-extension-boilerplate](https://github.com/mubaidr/vue-chrome-extension-boilerplate). It looks like remove-evals.js is used because chrome extensions ship with a content-security-policy that disallows `eval`. build-zip.js is used to package up a production build of your extension.
+Next, borrow a couple of scripts we'll need for building the release: [scripts/remove-evals.js](https://github.com/bgschiller/vue-parcel-web-extension/blob/main/scripts/remove-evals.js) and [scripts/build-zip.js](https://github.com/bgschiller/vue-parcel-web-extension/blob/main/scripts/build-zip.js). I originally got these from another boilerplate, but made some changes to remove dependencies. It looks like remove-evals.js is used because chrome extensions ship with a content-security-policy that disallows `eval`. build-zip.js is used to package up a production build of your extension.
 
 Next, we'll make a manifest file, describing the extension's entry points. Our extension is fairly simple with only a popup, but yours might have content scripts, a background script, or an options page.
 
@@ -118,6 +118,8 @@ Now run `npm run dev` to build your extension. The first time you run this, parc
 Visit `chrome://extensions` or `about:debugging#/runtime/this-firefox`, depending on your browser. You may need to turn on developer mode if this is the first time you've loaded an extension from a file on this computer. Load the `dist` folder (chrome) or the manifest.json file (firefox), and your extension is ready!
 
 ![]({{ site.url }}{{ site.baseurl }}/images/color-of-the-day.png)
+
+All the code from this post is available at https://github.com/bgschiller/vue-parcel-web-extension
 
 ## More goodies
 
