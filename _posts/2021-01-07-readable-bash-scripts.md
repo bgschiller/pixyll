@@ -58,9 +58,11 @@ diff \
 alarm_title_
 alarm_description_
 alarm_operator_actions_') \
-    <(xpath -q -e config/AlarmList/Alarm/@name Alarms.xml | cut -d= -f2 | tr -d '"') \
+    <(xpath -q -e config/AlarmList/Alarm/@name Alarms.xml |
+      cut -d= -f2 | tr -d '"') \
     | tr -d ' ' | sort) \
-  <(jq '.[] | select(.stringId | startswith("alarm_")) | .stringId ' i18n/en.json | sort)
+  <(jq '.[] | select(.stringId | startswith("alarm_")) |
+        .stringId ' i18n/en.json | sort)
 ```
 
 It's convoluted and kinda impressive in that way. But not code you'd be happy to maintain.
@@ -82,11 +84,14 @@ alarm_description_
 alarm_operator_actions_
 EOF
 
-xpath -q -e config/AlarmList/Alarm/@name Alarms.xml | cut -d= -f2 | tr -d '"' > expected_alarm_names
+xpath -q -e config/AlarmList/Alarm/@name Alarms.xml |
+  cut -d= -f2 | tr -d '"' > expected_alarm_names
 
-join -j 999 alarm_attrs expected_alarm_names | tr -d ' ' | sort > expected_localization_keys
+join -j 999 alarm_attrs expected_alarm_names |
+  tr -d ' ' | sort > expected_localization_keys
 
-jq -r '.[] | select(.stringId | startswith("alarm_")) | .stringId' en.json | sort > actual_localization_keys
+jq -r '.[] | select(.stringId | startswith("alarm_")) |
+       .stringId' en.json | sort > actual_localization_keys
 ```
 
 This is better! Each piece can be understood in isolation, and the dependencies between steps are explictly tracked with named files. All that's left is to add comments and some error checking, and clean up our intermediate files.
@@ -101,7 +106,7 @@ set -ef -o pipefail
 readonly script_name=`basename "$0"`
 usage() {
   cat >&2 << EOF
-Usage: $script_name <path-to-Alarms.xml> <path-to-localization-file.json>
+Usage: $script_name <path-to-Alarms.xml> <path-to-en.json>
 
   Compare the alarms specified in Alarms.xml against the
   localizations keys provided in a [language-code].json file
@@ -128,24 +133,26 @@ fi
 
 # Make a directory for intermediate results
 tmpdir=$(mktemp -d -p .)
-# ensure it's removed when this script exits normally, or via interrupt
+# ensure it's removed when this script exits
 trap "rm -rf $tmpdir" EXIT HUP INT TERM
-# note: when debugging, turn off that `trap` line to keep intermediate results around
+# note: when debugging, turn off that `trap` line to keep
+# intermediate results around
 
-# The plan is ultimately to use diff to compare names between Alarms.xml
-# and en.json. diff will tell us if any names appar in one file but are missing
-# in the other (checks both directions for a mismatch). In pursuit of this, we
-# need to create a couple of temporary files:
-#   1) all the alarm names we expect to find (based on Alarms.xml)
-#   2) all the names actually present in the localization file.
-# A complication: the location file uses a flat format to store the id, title,
-# description, and operator_actions:
+# The plan is ultimately to use diff to compare names between
+# Alarms.xml and en.json. diff will tell us if any names
+# appear in one file but are missing in the other (checks
+# both directions for a mismatch).In pursuit of this, we need
+# to create a couple of temporary files:
+#  1) all the alarm names we expect to find (based on Alarms.xml)
+#  2) all the names actually present in the localization file.
+# A complication: the location file uses a flat format to
+# store the id, title, description, and operator_actions:
 #   { "stringId": "alarm_id_MozzarellaTooWarm", ... },
 #   { "stringId": "alarm_title_MozzarellaTooWarm", ... },
 #   { "stringId": "alarm_description_MozzarellaTooWarm", ... },
 #   { "stringId": "alarm_operator_actions_MozzarellaTooWarm", ... },
-# We want to check that *all* of these keys are present, so we use a cross product of
-# (alarm names) X (those attributes)
+# We want to check that *all* of these keys are present, so
+# we use a cross product of (alarm names) X (those attributes)
 
 cat > $tmpdir/alarm_attrs << EOF
 alarm_id_
@@ -154,14 +161,20 @@ alarm_description_
 alarm_operator_actions_
 EOF
 
-xpath -q -e config/AlarmList/Alarm/@name $ALARM_CONFIG_XML | cut -d= -f2 | tr -d '"' > $tmpdir/expected_alarm_names
+xpath -q -e config/AlarmList/Alarm/@name $ALARM_CONFIG_XML |
+ cut -d= -f2 | tr -d '"' > $tmpdir/expected_alarm_names
 
-# trick to compute cross product: use `join` with a join field that doesn't exist (999)
-# since both files lack a field at 999, they will compare equal for every key, and each line of
-# the left file will be joined with each line of the right file--a cross product.
-join -j 999 $tmpdir/alarm_attrs $tmpdir/expected_alarm_names | tr -d ' ' | sort > $tmpdir/expected_localization_keys
+# trick to compute cross product: use `join` with a join
+# field that doesn't exist (999). since both files lack a
+# field at 999, they will compare equal for every key, and
+# each line of the left file will be joined with each line
+# of the right file--a cross product.
+join -j 999 $tmpdir/alarm_attrs $tmpdir/expected_alarm_names |
+tr -d ' ' | sort > $tmpdir/expected_localization_keys
 
-jq -r '.[] | select(.stringId | startswith("alarm_")) | .stringId' $LOCALIZATION_JSON | sort > $tmpdir/actual_localization_keys
+jq -r '.[] | select(.stringId | startswith("alarm_")) |
+       .stringId' $LOCALIZATION_JSON |
+  sort > $tmpdir/actual_localization_keys
 
 if diff $tmpdir/expected_localization_keys $tmpdir/actual_localization_keys; then
    echo "Success! Found all" $(wc -l $tmpdir/expected_localization_keys) "expected localization keys"  1>&2
