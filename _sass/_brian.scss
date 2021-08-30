@@ -42,13 +42,13 @@ div.title-block.with-image {
   @media screen and (max-device-width:  $break-small){
     width:100%;
   }
-  
+
   hr {
     @media screen and (max-device-width: $break-small){
         display:none;
     }
-  }    
-  
+  }
+
 
   hr:first-child {
     float: left;
@@ -102,4 +102,10 @@ figure {
     margin: 0 auto;
     width: 100%;
   }
+}
+
+aside {
+  border: dashed #aaa;
+  color: #4c4b4b;
+  padding: 1.1rem;
 }
