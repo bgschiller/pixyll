@@ -5,8 +5,6 @@ category: blog
 tags: [aws, cdk, cors, proxy, cloudfront]
 ---
 
-# Avoiding CORS with a proxy
-
 Why do we even have CORS? If you wish we could just turn it off and forget it ever happened, you wouldn't be alone. Luckily, once you understand what it protects against it's pretty painless to avoid.
 
 ## Why CORS exists
