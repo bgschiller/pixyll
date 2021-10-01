@@ -53,7 +53,7 @@ cors-proxy-random-duck.domainname = d1vhuvp492i00h.cloudfront.net
 cors-proxy-random-duck.message = Access random-d.uk without CORS restrictions using d1vhuvp492i00h.cloudfront.net as a proxy
 ```
 
-And we can try it out in a browser to see it working.
+And we can try it out in a browser to see it working. This screenshot shows browser logs listing CORS errors when requesting random-d.uk directly, but a successful request when using the cloudfront proxy.
 
 ![browser logs showing CORS errors when requesting random-d.uk directly, but a successful request when using the cloudfront proxy]({{ site.url }}{{ site.baseurl }}/images/cloudfront-cors-duck-proxy.png)
 
