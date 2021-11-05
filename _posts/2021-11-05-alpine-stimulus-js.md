@@ -182,7 +182,7 @@ Open/close a menu on click.
 
 ### Stimulus
 
-https://codepen.io/bgschiller/pen/jOLLNpj
+_see the full working example at [https://codepen.io/bgschiller/pen/jOLLNpj](https://codepen.io/bgschiller/pen/jOLLNpj)_
 
 This one went some better for stimulus. The markup is cleaner, and we were able to re-use the toggle controller from the other page. That seems to be one of Stimulus' main goals. We still have the ugly `data-toggle-target="ariaExpander"`. Also, we needed to add an overlay div purely to capture click events outside of the menu.
 
@@ -222,7 +222,7 @@ Also, this one has a bug. When the menu is open, it can be closed by clicking el
 
 ### Alpine.js
 
-https://codepen.io/bgschiller/pen/WNEzvLj
+_see the full working example at [https://codepen.io/bgschiller/pen/WNEzvLj](https://codepen.io/bgschiller/pen/WNEzvLj)_
 
 No complaints, worked like a charm. I particularly love the `.outside` modifier, which let us skip the overlay div that was needed for Stimulus and all the supporting CSS. How'd they fit all this good stuff into 7kb?
 
@@ -246,4 +246,4 @@ No complaints, worked like a charm. I particularly love the `.outside` modifier,
 
 ## Conclusion
 
-I have no qualms about recommending Alpine over Stimulus. Stimulus seems to have skipped the lessons of the past 7-8 years. It's better than jQuery, but ignores the things that are good about React, Vue, etc: reactivity and declarative rendering. Meanwhile, Alpine manages to pack a ton of useful functionality into a _smaller_ bundle size than Stimulus.
+I can enthusiastically choose Alpine over Stimulus. Stimulus seems to have skipped the lessons of the past 7-8 years. It's better than jQuery, but ignores the things that are good about React, Vue, etc: reactivity and declarative rendering. Meanwhile, Alpine manages to pack a ton of useful functionality into a _smaller_ bundle size than Stimulus.
