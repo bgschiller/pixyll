@@ -172,7 +172,7 @@ The only css we need for this demo is to set up `x-cloak`. `x-cloak` is a funny 
 }
 ```
 
-## Toggle Menu
+## Task 2: Toggle Menu
 
 Open/close a menu on click.
 
