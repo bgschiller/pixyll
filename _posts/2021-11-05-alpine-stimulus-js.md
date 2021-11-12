@@ -164,7 +164,7 @@ function analyticsNotify(event) {
 
 The Alpine example doesn't need nearly as much css support as Stimulus. `x-show` is doing a lot for us, so we don't have to set a class and hope the css is consistent with our goals. Fewer files to edit to accomplish the same behavior, and you don't have to go read the css rules to find out what a given class does.
 
-The only css we need for this demo is to set up `x-cloak`. `x-cloak` is a funny attribute that does almost nothing: when Alpine wakes up and attaches to the page, it removes it. Without it, there is a moment when Alpine hasn't yet taken control so we can still see everything that would be hidden by a `x-if` or a `x-show`. `x-cloak` covers us for that period of time.
+The only css we need for this demo is to set up `x-cloak`. `x-cloak` is a funny attribute that does almost nothing: when Alpine wakes up and attaches to the page, it removes it. Without it, there is a moment when Alpine hasn't yet taken control so we can still see everything that would be hidden by an `x-show` or styled differently with `v-bind:class`. `x-cloak` covers us for that period of time.
 
 ```css
 [x-cloak] {
