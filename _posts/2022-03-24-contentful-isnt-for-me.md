@@ -5,9 +5,6 @@ category: blog
 tags: [cms, database]
 ---
 
-Contentful isn't for me
-=======================
-
 I've spent the last few days getting Contentful set up for a new project, and have come to the conclusion that it isn't for me. I'm not saying I have distaste for it. In fact, I think it might be more pleasant to use than my current blog setup using jekyll. Rather, I've found that it doesn't make sense for websites I make at work.
 
 The editor UI seems pretty good. But, as a developer, the primary way I interact with a CMS is defining the data model. As project requirements change, I will need to update and grow the model to accomdate new feature requests. A good CMS, from my perspective, is one that makes this schema migration process safe and painless.
