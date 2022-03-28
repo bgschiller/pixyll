@@ -91,4 +91,4 @@ Inspecting the current schema is a nice-to-have, but I wasn't willing to live wi
 
 Because it wasn't too much extra work, I also set it up to make the current schema available to each migration.
 
-~~If this sounds useful to you, it's open source at [bgschiller/contentful-migrations](https://github.com/bgschiller/contentful-migrations).~~ I've found an existing library, [deluan/contentful-migrations](https://github.com/deluan/contentful-migrate) and play to use that instead. It's been around for longer is more battle-tested than my hacky bash script.
+~~If this sounds useful to you, it's open source at [bgschiller/contentful-migrations](https://github.com/bgschiller/contentful-migrations).~~ I've found an existing library, [deluan/contentful-migrations](https://github.com/deluan/contentful-migrate) and plan to use that instead. It's been around for longer is more battle-tested than my hacky bash script.
