@@ -1,13 +1,11 @@
 ---
 layout: post
-title: Contentful isn't for me
+title: Contentful migration strategy
 category: blog
 tags: [cms, database]
 ---
 
-I've spent the last few days getting Contentful set up for a new project, and have come to the conclusion that it isn't for me. I'm not saying I have distaste for it. In fact, I think it might be more pleasant to use than my current blog setup using jekyll. Rather, I've found that it doesn't make sense for websites I make at work.
-
-The editor UI seems pretty good. But, as a developer, the primary way I interact with a CMS is defining the data model. As project requirements change, I will need to update and grow the model to accomdate new feature requests. A good CMS, from my perspective, is one that makes this schema migration process safe and painless.
+I've spent the last few days getting Contentful set up for a new project and have become frustrated with the migration story. As a developer, the primary way I interact with a CMS is defining the data model. When project requirements change, I will need to update and grow the model to accomdate new feature requests. A good CMS, from my perspective, is one that makes this schema migration process safe and painless.
 
 ### Why we need migrations
 
@@ -93,10 +91,4 @@ Inspecting the current schema is a nice-to-have, but I wasn't willing to live wi
 
 Because it wasn't too much extra work, I also set it up to make the current schema available to each migration.
 
-If this sounds useful to you, it's open source at [bgschiller/contentful-migrations](https://github.com/bgschiller/contentful-migrations).
-
-## Conclusion
-
-I can't help but compare Contentful with other CMSs I've used. It's certainly better than wordpress, but not nearly as good as Django. At least, the experience of editing the content model isn't. The admin panel is worlds better.
-
-So maybe that's how I should think of it. It's a really good admin panel that also restricts how you store your data. If I have the option on a future project, I'll try to find a replacement admin panel that lets me keep my data in Postgres but still makes the editors happy.
+~~If this sounds useful to you, it's open source at [bgschiller/contentful-migrations](https://github.com/bgschiller/contentful-migrations).~~ I've found an existing library, [deluan/contentful-migrations](https://github.com/deluan/contentful-migrate) and play to use that instead. It's been around for longer is more battle-tested than my hacky bash script.
