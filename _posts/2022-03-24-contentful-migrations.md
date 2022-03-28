@@ -5,7 +5,7 @@ category: blog
 tags: [cms, database]
 ---
 
-I've spent the last few days getting Contentful set up for a new project and have become frustrated with the migration story. As a developer, the primary way I interact with a CMS is defining the data model. When project requirements change, I will need to update and grow the model to accomdate new feature requests. A good CMS, from my perspective, is one that makes this schema migration process safe and painless.
+I've spent the last few days getting Contentful set up for a new project and have become frustrated with the migration story. As a developer, the primary way I interact with a CMS is defining the data model. When project requirements change, I will need to update and grow the model to accomodate new feature requests. A good CMS, from my perspective, is one that makes this schema migration process safe and painless.
 
 ### Why we need migrations
 
