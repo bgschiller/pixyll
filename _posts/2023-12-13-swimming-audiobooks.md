@@ -55,7 +55,7 @@ With a bit of patience, I could fix this. Just copy one file... wait for it to f
 Instead, I wrote a script:
 
 ```bash
-for ff in $(ls); do
+for ff in $(ls ~/Music/swimming-staging-area); do
   cp $ff /Volumes/OpenSwim/alloy-of-law 
   sleep 5
 done
@@ -74,3 +74,30 @@ There was also a small stutter when the track transitioned in the middle of the 
 ## Reflections
 
 I've heard people say that "coding is the new literacy". I'm still skeptical of that idea. Literacy is a public good that makes all of society more efficient. Coding is useful _sometimes_. Still, I think this is a great example of applying programming skills to a problem in my own life.
+
+## Update: swimming-staging-area
+
+I wrote a new script for copying the files across.
+
+```bash
+find ~/Music/swimming-staging-area -type f | sort | while read -d $'\n' ff; do
+  relname=$(echo $ff | sed "s|^$HOME/Music/swimming-staging-area/||g")
+  echo $relname
+  mkdir -p "$(dirname /Volumes/OpenSwim/$relname)"
+  cp "$ff" "/Volumes/OpenSwim/$relname"
+  sleep 3
+done
+```
+
+This new one:
+
+- Allows me to prepare all the songs and albums that will be on the headphones ahead of time, in `swimming-staging-area`
+- handles spaces in filenames
+- creates directories for the albums if they don't already exist on the headphones.
+
+With the new script, my workflow is to
+
+1. pick out albums and podcasts, putting them in `swimming-staging-area`.
+2. Rename the folders until they're in the order I want.
+3. Delete the files in /Volumes/OpenSwim/.
+4. Run my script.
