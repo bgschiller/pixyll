@@ -55,7 +55,7 @@ With a bit of patience, I could fix this. Just copy one file... wait for it to f
 Instead, I wrote a script:
 
 ```bash
-for ff in $(ls ~/Music/swimming-staging-area); do
+for ff in $(ls alloy-of-law-itty-bitty); do
   cp $ff /Volumes/OpenSwim/alloy-of-law 
   sleep 5
 done
