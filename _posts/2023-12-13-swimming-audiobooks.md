@@ -101,3 +101,20 @@ With the new script, my workflow is to
 2. Rename the folders until they're in the order I want.
 3. Delete the files in /Volumes/OpenSwim/.
 4. Run my script.
+
+## Update: shuffled folders
+
+This is mostly working for me, with one small annoyance. I used [spotify-dl](https://sathyasays.com/2015/12/29/spotify-dl-download-your-spotify-my-music-songs-as-mp3/) to download a playlist of songs and I wasn't careful about the filenames, so the songs are sorted by artist. I added a line to the script to shuffle the contents of any folder with "shuffle" in its name.
+
+```bash
+find ~/Music/swimming-staging-area -type d -depth 1 | sort | while read -d $'\n' dir; do
+  sortFlags=$([[ $dir == *shuffle* ]] && echo "-R" || echo "")
+  find $dir -type f | sort $sortFlags | while read -d $'\n' ff; do
+    relname=$(echo $ff | sed "s|^$HOME/Music/swimming-staging-area/||g")
+    echo $relname
+    mkdir -p "$(dirname /Volumes/OpenSwim/$relname)"
+    cp "$ff" "/Volumes/OpenSwim/$relname"
+    sleep 3
+  done
+done
+```
