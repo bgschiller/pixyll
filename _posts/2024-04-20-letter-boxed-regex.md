@@ -3,7 +3,7 @@ layout: post
 title: Solving the New York Times Letter Boxed Puzzle with Regular Expressions
 category: blog
 tags: [programming, regex, puzzles, games]
-published: false
+published: true
 ---
 
 Our household has been playing a lot of the NYT games lately. I find the Letter Boxed puzzle particularly tricky, which gets me thinking, "How could I solve this with a tool?" It's not too hard to write a function to check if a word follows the rules: subsequent letters must come from different sides of the square. I wondered: could this be solved with a regex?
