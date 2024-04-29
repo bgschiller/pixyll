@@ -3,10 +3,9 @@ layout: post
 title: JavaScript Package Development
 category: blog
 tags: [programming, javascript, typescript, npm, gitlab, tools]
-published: false
 ---
 
-I just (today! _editor's note: It's now been a month since this blog post was started, so not today_) finished setting up the main repo I use at work the way I wanted it. It accumulates tricks and tips from several different projects I've worked on in the past, trying to glean the best from everything. I feel I sense that I'll forget it all if I don't write it down, so here we are.
+I just (_editor's note: It's now been a month since this blog post was started, so about a month ago_) finished setting up the main repo I use at work the way I wanted it. It accumulates tricks and tips from several different projects I've worked on in the past, trying to glean the best from everything. I feel I sense that I'll forget it all if I don't write it down, so here we are.
 
 It's a bit GitLab-centric, since that's what I use at work. I'm confident it can be adapted to GitHub Actions or other CI/CD tools. Let me know if you write up such an adaptation—I'd love to link to it!
 
@@ -257,7 +256,7 @@ publish_preview_packages:
   stage: preview
   script:
     - node assets/update-preview-version.mjs
-    - pnpm multi publish --no-git-checks --tag "${CI_COMMIT_REF_NAME:-preview}"
+    - pnpm recursive publish --no-git-checks --tag "${CI_COMMIT_REF_NAME:-preview}"
   rules:
     - when: manual
 ```
@@ -351,7 +350,7 @@ In the next section, we choose a tag depending on whether changesets is in [prer
       else
         export TAG="latest"
       fi
-    - pnpm multi publish --no-git-checks --tag $TAG
+    - pnpm recursive publish --no-git-checks --tag $TAG
   # continues below
 ```
 
